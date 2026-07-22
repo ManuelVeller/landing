@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vidriera de Sistemas & Automatizaciones | Calidad Asegurada</title>
+    <meta name="description" content="Catálogo de sistemas internos, integraciones y automatizaciones a medida con procesos rigurosos de testing y QA.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS v4 Play CDN -->
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+    
+    <!-- Estilos Personalizados y Configuración de Tema de Tailwind v4 -->
+    <style type="text/css">
+        :root {
+            --color-bg-dark: #0f172a;
+            --color-bg-card: #1e293b;
+            --color-brand-cyan: #06b6d4;
+            --color-brand-violet: #8b5cf6;
+            --color-brand-emerald: #10b981;
+            --color-brand-amber: #f59e0b;
+            --color-brand-rose: #f43f5e;
+            --color-border-subtle: rgba(255, 255, 255, 0.15);
+            
+            --font-sans: 'Inter', sans-serif;
+            --font-display: 'Outfit', sans-serif;
+        }
+
+        /* Estilos base globales */
+        body {
+            font-family: var(--font-sans);
+            background-color: var(--color-bg-dark);
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: var(--font-display);
+        }
+
+        /* Efecto de Tarjeta con Alto Contraste */
+        .glass-panel {
+            background: var(--color-bg-card);
+            border: 1px solid var(--color-border-subtle);
+        }
+
+        .glass-card {
+            background: var(--color-bg-card);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .glass-card:hover {
+            border-color: rgba(6, 182, 212, 0.3);
+            box-shadow: 0 10px 30px -10px rgba(6, 182, 212, 0.15);
+            transform: translateY(-2px);
+        }
+
+        /* Luces de Fondo (Background Glows) */
+        .bg-glow-purple {
+            background: radial-gradient(circle, rgba(139, 92, 246, 0.15) 0%, rgba(0, 0, 0, 0) 70%);
+        }
+
+        .bg-glow-cyan {
+            background: radial-gradient(circle, rgba(6, 182, 212, 0.12) 0%, rgba(0, 0, 0, 0) 70%);
+        }
+
+        .bg-glow-emerald {
+            background: radial-gradient(circle, rgba(16, 185, 129, 0.08) 0%, rgba(0, 0, 0, 0) 70%);
+        }
+
+        /* Animación de Gradiente en Texto */
+        .text-gradient {
+            background: linear-gradient(135deg, #06b6d4 0%, #8b5cf6 50%, #d946ef 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .text-gradient-emerald {
+            background: linear-gradient(135deg, #34d399 0%, #059669 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+    </style>
+</head>
+<body class="selection:bg-brand-cyan/30 selection:text-white">
+
+    <!-- Luces de fondo ambientales -->
+    <div class="absolute top-0 left-1/4 w-[500px] h-[500px] bg-glow-cyan pointer-events-none -z-10"></div>
+    <div class="absolute top-1/3 right-1/4 w-[600px] h-[600px] bg-glow-purple pointer-events-none -z-10"></div>
+    <div class="absolute bottom-1/4 left-10 w-[500px] h-[500px] bg-glow-emerald pointer-events-none -z-10"></div>
+
+    <!-- HEADER / NAVEGACIÓN -->
+    <header class="sticky top-0 z-50 w-full border-b border-white/5 bg-bg-dark/85 backdrop-blur-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <!-- Icono de Logotipo -->
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-cyan to-brand-violet flex items-center justify-center shadow-lg shadow-brand-cyan/20">
+                    <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M14.25 9.75L16.5 12l-2.25 2.25m-4.5 0L7.5 12l2.25-2.25M6 20.25h12A2.25 2.25 0 0020.25 18V6A2.25 2.25 0 0018 3.75H6A2.25 2.25 0 003.75 6v12A2.25 2.25 0 006 20.25z" />
+                    </svg>
+                </div>
+                <span class="font-display font-extrabold text-xl tracking-tight bg-gradient-to-r from-white to-slate-400 bg-clip-text text-transparent">QA.SYSTEMS</span>
+            </div>
+            
+            <nav class="hidden md:flex items-center gap-8">
+                <a href="#sistemas" class="text-sm font-medium text-slate-200 hover:text-white transition-colors">Sistemas</a>
+                <a href="#calidad" class="text-sm font-medium text-slate-200 hover:text-white transition-colors">Calidad & QA</a>
+                <a href="#contacto" class="text-sm font-medium text-slate-200 hover:text-white transition-colors">Contacto</a>
+            </nav>
+
+            <div class="flex items-center gap-4">
+                <a href="#contacto" class="relative inline-flex items-center justify-center p-0.5 overflow-hidden text-xs font-bold rounded-lg group bg-gradient-to-br from-brand-cyan to-brand-violet group-hover:from-brand-cyan group-hover:to-brand-violet hover:text-white text-white focus:ring-4 focus:outline-none focus:ring-cyan-800">
+                    <span class="relative px-4 py-2 transition-all ease-in duration-75 bg-bg-dark rounded-md group-hover:bg-opacity-0">
+                        Agendar Consultoría
+                    </span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-32">
+
+        <!-- 1. HERO SECTION -->
+        <section id="hero" class="relative py-12 md:py-24 flex flex-col items-center text-center space-y-8">
+            <!-- Badge decorativo -->
+            <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full glass-card border-brand-cyan/20 text-xs font-semibold text-brand-cyan uppercase tracking-wider animate-pulse">
+                <span class="w-2 h-2 rounded-full bg-brand-cyan"></span>
+                Vidriera de Sistemas Activos
+            </div>
+            
+            <!-- Título Principal -->
+            <h1 class="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight max-w-4xl leading-tight">
+                Sistemas Internos Robustos & <br>
+                <span class="text-gradient">Automatizaciones Inteligentes</span>
+            </h1>
+            
+            <!-- Subtítulo -->
+            <p class="text-lg sm:text-xl text-slate-200 max-w-2xl font-light leading-relaxed">
+                Desarrollo soluciones a medida integrando APIs, bases de datos y webhooks. Cada sistema es testeado exhaustivamente bajo procesos de calidad y estabilidad.
+            </p>
+            
+            <!-- Botones de Acción (CTA) -->
+            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center pt-4 w-full max-w-md">
+                <a href="#sistemas" class="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-brand-cyan to-brand-violet hover:from-brand-cyan/90 hover:to-brand-violet/90 text-white font-semibold rounded-xl transition-all shadow-lg shadow-brand-cyan/15 hover:shadow-brand-cyan/30 text-center hover:scale-102">
+                    Ver Sistemas Activos
+                </a>
+                <a href="#contacto" class="w-full sm:w-auto px-8 py-4 glass-card hover:bg-white/5 border-white/10 hover:border-white/20 text-slate-100 hover:text-white font-semibold rounded-xl transition-all text-center hover:scale-102">
+                    Cotizar Sistema
+                </a>
+            </div>
+
+            <!-- Gráfico decorativo de fondo de la Hero -->
+            <div class="w-full max-w-5xl h-px bg-gradient-to-r from-transparent via-brand-cyan/35 to-transparent my-16"></div>
+        </section>
+
+        <!-- 2. SECCIÓN DE PRODUCTOS (CARDS DE VIDRIERA MODULAR) -->
+        <section id="sistemas" class="space-y-16">
+            <div class="text-center space-y-4">
+                <h2 class="text-3xl sm:text-5xl font-bold tracking-tight">Vidriera de Productos</h2>
+                <p class="text-slate-200 max-w-xl mx-auto">Explora demostraciones funcionales de los sistemas internos y automatizaciones que he implementado.</p>
+            </div>
+
+            <div class="space-y-24">
+                
+                <!-- CONTENEDOR REPETIBLE: PRODUCTO 1 (EJEMPLO: RENT A CAR) -->
+                <!-- id="rent-a-car" identifica este módulo de producto -->
+                <div id="producto-rent-a-car" class="glass-panel rounded-3xl p-6 sm:p-10 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 relative overflow-hidden">
+                    <div class="absolute -top-24 -left-24 w-48 h-48 bg-brand-cyan/5 rounded-full blur-3xl"></div>
+                    
+                    <!-- COLUMNA MULTIMEDIA: VIDEO/DEMO Y GALERÍA (Lado Izquierdo / Superior) -->
+                    <div class="lg:col-span-7 flex flex-col space-y-6">
+                        <!-- Contenedor Principal de Demo (Video, GIF o Imagen) -->
+                        <div class="relative w-full aspect-video rounded-2xl overflow-hidden glass-card group border-white/5">
+                            
+                            <!-- 
+                            ========================================================================
+                            [INSTRUCCIÓN DE REEMPLAZO - MULTIMEDIA PRINCIPAL]
+                            Aquí puedes colocar tu video o GIF. Hemos preparado las siguientes opciones:
+                            
+                            Opción A: TAG <video> (Video local en tu hosting o assets)
+                            Descomenta el siguiente bloque de código y cambia 'src' por tu archivo .mp4:
+                            
+                            <video src="./assets/mi-video-demo.mp4" controls autoplay muted loop class="w-full h-full object-cover"></video>
+                            
+                            Opción B: IFRAME DE YOUTUBE o LOOM (Video insertado)
+                            Reemplaza el bloque actual por el iframe provisto por YouTube/Loom:
+                            
+                            <iframe src="https://www.youtube.com/embed/TU_ID_DE_VIDEO?autoplay=0" class="w-full h-full aspect-video" frameborder="0" allowfullscreen></iframe>
+                            
+                            Opción C: IMAGEN O GIF DE DEMO (Por defecto activa a continuación)
+                            ========================================================================
+                            -->
+                            
+                            <!-- Imagen de demostración por defecto (Generada como asset real) -->
+                            <img src="./assets/rent-a-car-demo.png" alt="Rent a Car Dashboard Demo" class="w-full h-full object-cover group-hover:scale-103 transition-transform duration-700">
+                            
+                            <!-- Overlay de reproducción visual para denotar que es un espacio de video -->
+                            <div class="absolute inset-0 bg-slate-950/40 flex items-center justify-center group-hover:bg-slate-950/20 transition-all duration-300">
+                                <div class="w-16 h-16 rounded-full bg-brand-cyan/95 text-bg-dark flex items-center justify-center shadow-2xl shadow-brand-cyan/50 transform group-hover:scale-110 transition-transform cursor-pointer">
+                                    <svg class="w-7 h-7 fill-current ml-1" viewBox="0 0 24 24">
+                                        <path d="M8 5v14l11-7z"/>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Mini Galería para 3 capturas de pantalla adicionales -->
+                        <div class="grid grid-cols-3 gap-4">
+                            <!-- 
+                            ========================================================================
+                            [INSTRUCCIÓN DE REEMPLAZO - CAPTURAS DE PANTALLA ADICIONALES]
+                            Reemplaza las rutas del tag 'src' por tus capturas reales.
+                            Puedes usar tamaños medianos (ej: 600x400 px) para un rendimiento óptimo.
+                            ========================================================================
+                            -->
+                            <div class="aspect-video rounded-xl overflow-hidden glass-card cursor-zoom-in group border-white/5 relative">
+                                <img src="./assets/rent-a-car-demo.png" alt="Detalle de Contratos" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300">
+                                <div class="absolute inset-0 bg-brand-cyan/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                    <svg class="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m4-3H6" /></svg>
+                                </div>
+                            </div>
+                            
+                            <div class="aspect-video rounded-xl overflow-hidden glass-card cursor-zoom-in group border-white/5 relative">
+                                <img src="./assets/rent-a-car-demo.png" alt="Detalle de Flota" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300 filter hue-rotate-15">
+                                <div class="absolute inset-0 bg-brand-cyan/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                    <svg class="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m4-3H6" /></svg>
+                                </div>
+                            </div>
+                            
+                            <div class="aspect-video rounded-xl overflow-hidden glass-card cursor-zoom-in group border-white/5 relative">
+                                <img src="./assets/rent-a-car-demo.png" alt="Reporte Financiero" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300 filter saturate-150">
+                                <div class="absolute inset-0 bg-brand-cyan/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                    <svg class="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m4-3H6" /></svg>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- COLUMNA TEXTO ESTRUCTURADO EN 3 PARTES (Lado Derecho / Inferior) -->
+                    <div class="lg:col-span-5 flex flex-col justify-between space-y-8">
+                        <div class="space-y-4">
+                            <!-- Categoría y Estado -->
+                            <div class="flex items-center gap-3">
+                                <span class="px-2.5 py-0.5 rounded-md bg-brand-cyan/10 text-brand-cyan text-xs font-semibold uppercase tracking-wider">Flotas & Operaciones</span>
+                                <span class="px-2.5 py-0.5 rounded-md bg-brand-emerald/10 text-brand-emerald text-xs font-semibold">100% Estable</span>
+                            </div>
+                            <!-- Título del Sistema -->
+                            <h3 class="text-2xl sm:text-3xl font-bold tracking-tight text-white">Rent a Car Internal Dashboard</h3>
+                            <!-- Descripción general -->
+                            <p class="text-sm text-slate-200">
+                                Sistema de administración interna para empresas de alquiler de vehículos. Centraliza flota, gestión de contratos de clientes y facturación en un solo panel de control rápido y seguro.
+                            </p>
+                        </div>
+
+                        <!-- Estructura de 3 Partes: Problema, Solución y Beneficio -->
+                        <div class="space-y-4">
+                            
+                            <!-- PARTE 1: EL PROBLEMA -->
+                            <div class="p-4 rounded-xl bg-brand-rose/5 border-l-4 border-brand-rose space-y-1">
+                                <h4 class="text-xs font-bold uppercase text-brand-rose tracking-wider flex items-center gap-1.5">
+                                    <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+                                    El Problema
+                                </h4>
+                                <p class="text-xs sm:text-sm text-slate-100">
+                                    La agencia registraba reservas en papel y Excel. Esto causaba sobreventas de vehículos, descontrol en contratos activos y pérdida de tiempo calculando tarifas complejas manualmente.
+                                </p>
+                            </div>
+
+                            <!-- PARTE 2: CÓMO LO SOLUCIONA -->
+                            <div class="p-4 rounded-xl bg-brand-cyan/5 border-l-4 border-brand-cyan space-y-1">
+                                <h4 class="text-xs font-bold uppercase text-brand-cyan tracking-wider flex items-center gap-1.5">
+                                    <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg>
+                                    Cómo lo soluciona
+                                </h4>
+                                <p class="text-xs sm:text-sm text-slate-100">
+                                    Creamos un dashboard reactivo con asignación de vehículos en tiempo real mediante algoritmos de prevención de colisiones de fecha, integrado con pasarelas de cobro y contratos firmados digitalmente.
+                                </p>
+                            </div>
+
+                            <!-- PARTE 3: RESULTADO / BENEFICIO PRINCIPAL -->
+                            <div class="p-4 rounded-xl bg-brand-emerald/5 border-l-4 border-brand-emerald space-y-1">
+                                <h4 class="text-xs font-bold uppercase text-brand-emerald tracking-wider flex items-center gap-1.5">
+                                    <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                                    Beneficio Principal
+                                </h4>
+                                <p class="text-xs sm:text-sm text-slate-100">
+                                    Eliminación total del error de sobreventa de vehículos. Reducción del tiempo de creación de contratos de <strong class="text-white font-semibold">15 minutos a 45 segundos</strong> mediante automatización y generación de PDF.
+                                </p>
+                            </div>        </p>
+                            </div>
+
+                        </div>
+
+                        <!-- CTA del producto específico -->
+                        <div class="pt-2">
+                            <a href="#contacto" class="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold text-brand-cyan hover:text-white transition-colors group/link">
+                                Solicitar Demo del Sistema
+                                <svg class="w-4 h-4 transform group-hover/link:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CONTENEDOR REPETIBLE: PRODUCTO 2 (EJEMPLO: CRM AUTOMATIZADO CON N8N) -->
+                <!-- id="crm-n8n" identifica este módulo de producto -->
+                <div id="producto-crm-automation" class="glass-panel rounded-3xl p-6 sm:p-10 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 relative overflow-hidden">
+                    <div class="absolute -top-24 -right-24 w-48 h-48 bg-brand-violet/5 rounded-full blur-3xl"></div>
+                    
+                    <!-- COLUMNA MULTIMEDIA: VIDEO/DEMO Y GALERÍA (Lado Izquierdo / Superior) -->
+                    <div class="lg:col-span-7 flex flex-col space-y-6">
+                        <!-- Contenedor Principal de Demo (Video, GIF o Imagen) -->
+                        <div class="relative w-full aspect-video rounded-2xl overflow-hidden glass-card group border-white/5">
+                            
+                            <!-- Imagen por defecto - en este caso mostramos una estructura sutil de API/Automatización simulada con CSS -->
+                            <div class="w-full h-full bg-slate-900 flex flex-col items-center justify-center p-8 relative">
+                                <div class="absolute inset-0 bg-[radial-gradient(#1e293b_1px,transparent_1px)] [background-size:16px_16px] opacity-40"></div>
+                                
+                                <!-- Simulación gráfica de un flujo de n8n -->
+                                <div class="flex items-center gap-4 sm:gap-8 z-10">
+                                    <div class="p-3 bg-brand-cyan/10 border border-brand-cyan/30 rounded-xl text-brand-cyan flex items-center justify-center">
+                                        <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" /></svg>
+                                    </div>
+                                    <div class="h-0.5 w-12 bg-gradient-to-r from-brand-cyan to-brand-violet relative">
+                                        <div class="absolute w-2 h-2 rounded-full bg-brand-violet -right-1 -top-0.5 animate-ping"></div>
+                                    </div>
+                                    <div class="p-4 bg-brand-violet/10 border border-brand-violet/30 rounded-2xl text-brand-violet flex items-center justify-center shadow-lg shadow-brand-violet/10">
+                                        <svg class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+                                    </div>
+                                    <div class="h-0.5 w-12 bg-gradient-to-r from-brand-violet to-brand-emerald"></div>
+                                    <div class="p-3 bg-brand-emerald/10 border border-brand-emerald/30 rounded-xl text-brand-emerald flex items-center justify-center">
+                                        <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+                                    </div>
+                                </div>
+                                <span class="text-xs text-slate-500 font-mono mt-6 z-10">Webhook Trigger -> CRM Lead Enrichment -> WhatsApp Notification</span>
+                            </div>
+
+                            <!-- Overlay de reproducción visual -->
+                            <div class="absolute inset-0 bg-slate-950/40 flex items-center justify-center group-hover:bg-slate-950/20 transition-all duration-300">
+                                <div class="w-16 h-16 rounded-full bg-brand-violet/95 text-bg-dark flex items-center justify-center shadow-2xl shadow-brand-violet/50 transform group-hover:scale-110 transition-transform cursor-pointer">
+                                    <svg class="w-7 h-7 fill-current ml-1" viewBox="0 0 24 24">
+                                        <path d="M8 5v14l11-7z"/>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Mini Galería para 3 capturas de pantalla adicionales -->
+                        <div class="grid grid-cols-3 gap-4">
+                            <div class="aspect-video rounded-xl bg-slate-900 border border-white/5 flex items-center justify-center cursor-pointer hover:border-brand-violet/30 transition-colors">
+                                <span class="text-xs text-slate-500 font-mono">[Trigger Webhook]</span>
+                            </div>
+                            <div class="aspect-video rounded-xl bg-slate-900 border border-white/5 flex items-center justify-center cursor-pointer hover:border-brand-violet/30 transition-colors">
+                                <span class="text-xs text-slate-500 font-mono">[n8n Flow Diagram]</span>
+                            </div>
+                            <div class="aspect-video rounded-xl bg-slate-900 border border-white/5 flex items-center justify-center cursor-pointer hover:border-brand-violet/30 transition-colors">
+                                <span class="text-xs text-slate-500 font-mono">[WhatsApp API]</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- COLUMNA TEXTO ESTRUCTURADO EN 3 PARTES (Lado Derecho / Inferior) -->
+                    <div class="lg:col-span-5 flex flex-col justify-between space-y-8">
+                        <div class="space-y-4">
+                            <!-- Categoría y Estado -->
+                            <div class="flex items-center gap-3">
+                                <span class="px-2.5 py-0.5 rounded-md bg-brand-violet/10 text-brand-violet text-xs font-semibold uppercase tracking-wider">Integraciones & APIs</span>
+                                <span class="px-2.5 py-0.5 rounded-md bg-brand-emerald/10 text-brand-emerald text-xs font-semibold">Activo en Producción</span>
+                            </div>
+                            <!-- Título del Sistema -->
+                            <h3 class="text-2xl sm:text-3xl font-bold tracking-tight text-white">Automatización de CRM & Leads</h3>
+                            <!-- Descripción general -->
+                            <p class="text-sm text-slate-200">
+                                Conexión directa entre formularios web, enriquecimiento de datos de prospectos mediante base de datos pública de empresas, alertas instantáneas en Slack y mensajes automatizados a WhatsApp.
+                            </p>
+                        </div>
+
+                        <!-- Estructura de 3 Partes: Problema, Solución y Beneficio -->
+                        <div class="space-y-4">
+                            
+                            <!-- PARTE 1: EL PROBLEMA -->
+                            <div class="p-4 rounded-xl bg-brand-rose/5 border-l-4 border-brand-rose space-y-1">
+                                <h4 class="text-xs font-bold uppercase text-brand-rose tracking-wider flex items-center gap-1.5">
+                                    <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+                                    El Problema
+                                </h4>
+                                <p class="text-xs sm:text-sm text-slate-100">
+                                    Los clientes potenciales esperaban hasta 24 horas para ser atendidos. El equipo de ventas perdía tiempo buscando los perfiles de LinkedIn de los clientes y contactándolos de forma manual de uno a uno.
+                                </p>
+                            </div>
+
+                            <!-- PARTE 2: CÓMO LO SOLUCIONA -->
+                            <div class="p-4 rounded-xl bg-brand-cyan/5 border-l-4 border-brand-cyan space-y-1">
+                                <h4 class="text-xs font-bold uppercase text-brand-cyan tracking-wider flex items-center gap-1.5">
+                                    <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg>
+                                    Cómo lo soluciona
+                                </h4>
+                                <p class="text-xs sm:text-sm text-slate-100">
+                                    Implementamos un webhook con n8n que recibe el lead, busca automáticamente la información de la empresa (tamaño, sector, facturación) y lo asigna al comercial por WhatsApp con un mensaje personalizado.
+                                </p>
+                            </div>
+
+                            <!-- PARTE 3: RESULTADO / BENEFICIO PRINCIPAL -->
+                            <div class="p-4 rounded-xl bg-brand-emerald/5 border-l-4 border-brand-emerald space-y-1">
+                                <h4 class="text-xs font-bold uppercase text-brand-emerald tracking-wider flex items-center gap-1.5">
+                                    <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                                    Beneficio Principal
+                                </h4>
+                                <p class="text-xs sm:text-sm text-slate-100">
+                                    Tiempo de primera respuesta reducido a <strong class="text-white font-semibold">menos de 2 minutos</strong>. Incremento del 32% en la conversión de llamadas agendadas debido a la inmediatez del contacto.
+                                </p>
+                            </div>.
+                                </p>
+                            </div>
+
+                        </div>
+
+                        <!-- CTA del producto específico -->
+                        <div class="pt-2">
+                            <a href="#contacto" class="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold text-brand-violet hover:text-white transition-colors group/link">
+                                Solicitar Integración Similar
+                                <svg class="w-4 h-4 transform group-hover/link:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- 3. SECCIÓN QA & TESTING (MI SELLO DE CALIDAD) -->
+        <section id="calidad" class="space-y-16">
+            <div class="text-center space-y-4">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-emerald/10 text-xs font-semibold text-brand-emerald uppercase tracking-wider">
+                    QA & Estabilidad
+                </div>
+                <h2 class="text-3xl sm:text-5xl font-bold tracking-tight">Sello de Calidad y Robustez</h2>
+                <p class="text-slate-200 max-w-xl mx-auto">No solo escribo código; entrego software diseñado para fallar cero veces. Mi metodología de testing integrada.</p>
+            </div>
+
+            <!-- Estructura de Tarjetas QA -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                
+                <!-- Tarjeta 1: Casos de Prueba -->
+                <div class="glass-card rounded-2xl p-6 sm:p-8 space-y-6 flex flex-col justify-between">
+                    <div class="space-y-4">
+                        <div class="w-12 h-12 rounded-xl bg-brand-cyan/10 border border-brand-cyan/20 flex items-center justify-center text-brand-cyan">
+                            <!-- Icono Casos de Prueba -->
+                            <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-white">Casos de Prueba Rigurosos</h3>
+                        <p class="text-sm text-slate-200 leading-relaxed">
+                            Diseño de matrices de casos de prueba manuales y automatizados. Validamos flujos principales, caminos alternativos y entradas inválidas para evitar comportamientos inesperados de los usuarios en producción.
+                        </p>
+                    </div>
+                    <div class="text-xs text-brand-cyan font-mono pt-4 border-t border-white/5">
+                        ✓ Cobertura de flujos críticos
+                    </div>
+                </div>
+
+                <!-- Tarjeta 2: Test de APIs -->
+                <div class="glass-card rounded-2xl p-6 sm:p-8 space-y-6 flex flex-col justify-between">
+                    <div class="space-y-4">
+                        <div class="w-12 h-12 rounded-xl bg-brand-violet/10 border border-brand-violet/20 flex items-center justify-center text-brand-violet">
+                            <!-- Icono Test de APIs -->
+                            <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-white">Testing de APIs & Integraciones</h3>
+                        <p class="text-sm text-slate-200 leading-relaxed">
+                            Verificamos payloads JSON, validaciones de esquemas y códigos de respuesta HTTP de cada integración (REST/GraphQL). Aseguramos que la comunicación interna de datos sea consistente y resistente a fallos de conectividad.
+                        </p>
+                    </div>
+                    <div class="text-xs text-brand-violet font-mono pt-4 border-t border-white/5">
+                        ✓ Pruebas de integración & estrés
+                    </div>
+                </div>
+
+                <!-- Tarjeta 3: Reportes de Errores / Estabilidad -->
+                <div class="glass-card rounded-2xl p-6 sm:p-8 space-y-6 flex flex-col justify-between">
+                    <div class="space-y-4">
+                        <div class="w-12 h-12 rounded-xl bg-brand-emerald/10 border border-brand-emerald/20 flex items-center justify-center text-brand-emerald">
+                            <!-- Icono Reportes y Monitoreo -->
+                            <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-white">Reportes de Estabilidad</h3>
+                        <p class="text-sm text-slate-200 leading-relaxed">
+                            Monitoreo activo de logs de error en producción. Integramos trackers que disparan webhooks de alerta cuando ocurren fallos. El software cuenta con lógica resiliente para auto-repararse y reintentar procesos.
+                        </p>
+                    </div>
+                    <div class="text-xs text-brand-emerald font-mono pt-4 border-t border-white/5">
+                        ✓ Alertas automáticas n8n / Discord
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Gráfico/Dashboard de Calidad Realista (Opcional pero visualmente asombroso) -->
+            <div class="glass-panel rounded-3xl p-6 sm:p-8 border-white/5 overflow-hidden">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                    <div class="lg:col-span-5 space-y-6">
+                        <h3 class="text-2xl font-bold text-white tracking-tight">Monitoreo y Dashboard de Integridad</h3>
+                        <p class="text-sm text-slate-200 leading-relaxed">
+                            Esta visualización simula la infraestructura de logs de calidad implementada en tiempo real. Todas las llamadas y peticiones son validadas en su origen para mantener la salud operativa en el 99.9%.
+                        </p>
+                        <ul class="space-y-2 text-xs sm:text-sm text-slate-200 font-mono">
+                            <li class="flex items-center gap-2 text-brand-emerald">
+                                <span class="w-1.5 h-1.5 rounded-full bg-brand-emerald"></span>
+                                [OK] Core Engine API - 14.5ms avg latency
+                            </li>
+                            <li class="flex items-center gap-2 text-brand-emerald">
+                                <span class="w-1.5 h-1.5 rounded-full bg-brand-emerald"></span>
+                                [OK] Database Write-Through Sync - Success
+                            </li>
+                            <li class="flex items-center gap-2 text-brand-emerald">
+                                <span class="w-1.5 h-1.5 rounded-full bg-brand-emerald"></span>
+                                [OK] n8n Webhook Endpoint Listener - 200 OK
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="lg:col-span-7">
+                        <div class="rounded-xl overflow-hidden glass-card border-white/5 shadow-2xl">
+                            <img src="./assets/qa-metrics.png" alt="QA Dashboard Metrics" class="w-full h-auto object-cover">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. SECCIÓN DE CONTACTO (FORMULARIO CON WEBHOOK DE N8N) -->
+        <section id="contacto" class="max-w-4xl mx-auto space-y-12">
+            <div class="text-center space-y-4">
+                <h2 class="text-3xl sm:text-5xl font-bold tracking-tight">¿Tienes un proyecto en mente?</h2>
+                <p class="text-slate-200">Cuéntame tus necesidades y diseñaremos un sistema óptimo para automatizar tu operativa.</p>
+            </div>
+
+            <!-- Formulario de Contacto en Contenedor Glass -->
+            <div class="glass-panel rounded-3xl p-6 sm:p-10 border-white/5 relative overflow-hidden">
+                <!-- Efecto visual de fondo -->
+                <div class="absolute -bottom-24 -left-24 w-48 h-48 bg-brand-violet/5 rounded-full blur-3xl"></div>
+                
+                <form id="n8n-contact-form" class="space-y-6 relative z-10">
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <!-- Campo Nombre -->
+                        <div class="space-y-2">
+                            <label for="form-nombre" class="text-xs font-bold uppercase text-slate-200 tracking-wider">Nombre Completo</label>
+                            <input type="text" id="form-nombre" name="nombre" required placeholder="Juan Pérez" 
+                                class="w-full px-4 py-3 rounded-xl bg-slate-800 border border-slate-500 focus:border-brand-cyan/50 focus:ring-1 focus:ring-brand-cyan/50 text-white placeholder-slate-400 transition-all outline-none">
+                        </div>
+
+                        <!-- Campo Email -->
+                        <div class="space-y-2">
+                            <label for="form-email" class="text-xs font-bold uppercase text-slate-200 tracking-wider">Email de Contacto</label>
+                            <input type="email" id="form-email" name="email" required placeholder="juan@empresa.com" 
+                                class="w-full px-4 py-3 rounded-xl bg-slate-800 border border-slate-500 focus:border-brand-cyan/50 focus:ring-1 focus:ring-brand-cyan/50 text-white placeholder-slate-400 transition-all outline-none">
+                        </div>
+                    </div>
+
+                    <!-- Selector de Tipo de Proyecto (Dropdown) -->
+                    <div class="space-y-2">
+                        <label for="form-tipo" class="text-xs font-bold uppercase text-slate-200 tracking-wider">Tipo de Proyecto</label>
+                        <select id="form-tipo" name="tipo_proyecto" required 
+                            class="w-full px-4 py-3 rounded-xl bg-slate-800 border border-slate-500 focus:border-brand-cyan/50 focus:ring-1 focus:ring-brand-cyan/50 text-white transition-all outline-none">
+                            <option value="" disabled selected hidden class="bg-slate-800 text-slate-400">Selecciona el tipo de proyecto</option>
+                            <option value="automatizacion" class="bg-slate-800 text-white">Sistemas & Automatizaciones</option>
+                            <option value="testing" class="bg-slate-800 text-white">Consultoría de QA & Testing</option>
+                            <option value="otro" class="bg-slate-800 text-white">Otro requerimiento a medida</option>
+                        </select>
+                    </div>
+
+                    <!-- Campo Mensaje -->
+                    <div class="space-y-2">
+                        <label for="form-mensaje" class="text-xs font-bold uppercase text-slate-200 tracking-wider">Descripción del Sistema o Automatización</label>
+                        <textarea id="form-mensaje" name="mensaje" rows="5" required placeholder="Ej: Necesito automatizar la carga de leads de Facebook Ads hacia mi base de datos interna y notificar por Slack..." 
+                            class="w-full px-4 py-3 rounded-xl bg-slate-800 border border-slate-500 focus:border-brand-cyan/50 focus:ring-1 focus:ring-brand-cyan/50 text-white placeholder-slate-400 transition-all outline-none resize-none"></textarea>
+                    </div>
+
+                    <!-- Botón Enviar con indicador de carga integrado -->
+                    <div class="pt-2">
+                        <button type="submit" id="submit-btn" class="w-full py-4 bg-gradient-to-r from-brand-cyan to-brand-violet hover:from-brand-cyan/95 hover:to-brand-violet/95 text-white font-semibold rounded-xl transition-all shadow-lg shadow-brand-cyan/10 flex items-center justify-center gap-3 cursor-pointer hover:scale-101">
+                            <!-- Spinner de Carga (Oculto por defecto) -->
+                            <svg id="submit-spinner" class="animate-spin -ml-1 mr-3 h-5 w-5 text-white hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                            </svg>
+                            <span id="submit-text">Enviar Propuesta</span>
+                            <!-- Icono de flecha enviar -->
+                            <svg id="submit-icon" class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                            </svg>
+                        </button>
+                    </div>
+
+                    <!-- Caja de Feedback de Envío (Animada mediante JS) -->
+                    <div id="form-feedback" class="p-4 rounded-xl text-center text-sm font-semibold hidden transition-all duration-300">
+                        <!-- El contenido se inyecta dinámicamente -->
+                    </div>
+
+                </form>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="border-t border-white/10 bg-bg-dark mt-24 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6">
+            <p class="text-xs sm:text-sm text-slate-400 font-mono">
+                &copy; 2026 QA.SYSTEMS. Todos los derechos reservados.
+            </p>
+            <div class="flex gap-6">
+                <a href="#sistemas" class="text-xs sm:text-sm text-slate-400 hover:text-white transition-colors">Sistemas</a>
+                <a href="#calidad" class="text-xs sm:text-sm text-slate-400 hover:text-white transition-colors">Calidad</a>
+                <a href="#contacto" class="text-xs sm:text-sm text-slate-400 hover:text-white transition-colors">Contacto</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Lightbox Modal (Para ver capturas ampliadas) -->
+    <div id="lightbox-modal" class="fixed inset-0 z-50 hidden bg-slate-950/90 backdrop-blur-md flex items-center justify-center p-4 transition-all duration-300 opacity-0">
+        <button id="lightbox-close" class="absolute top-6 right-6 text-white hover:text-brand-cyan transition-colors cursor-pointer" aria-label="Cerrar modal">
+            <svg class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+        </button>
+        <div class="max-w-5xl max-h-[85vh] overflow-hidden rounded-2xl border border-white/10 shadow-2xl relative">
+            <img id="lightbox-img" src="" alt="Captura ampliada" class="w-full h-auto max-h-[80vh] object-contain">
+        </div>
+    </div>
+
+    <!-- SCRIPT DE ENVÍO DE WEBHOOK Y GESTIÓN DE ESTADOS -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const contactForm = document.getElementById('n8n-contact-form');
+            const submitBtn = document.getElementById('submit-btn');
+            const submitText = document.getElementById('submit-text');
+            const submitSpinner = document.getElementById('submit-spinner');
+            const submitIcon = document.getElementById('submit-icon');
+            const formFeedback = document.getElementById('form-feedback');
+
+            // ========================================================================
+            // [CONFIGURACIÓN DEL WEBHOOK DE N8N]
+            // Reemplaza la URL debajo con el endpoint productivo de tu n8n Webhook node.
+            // Asegúrate de usar la URL de webhook de PRODUCCIÓN en lugar de la de test.
+            // ========================================================================
+            const N8N_WEBHOOK_URL = 'https://n8n.tu-servidor.com/webhook/contacto-landing'; 
+
+            contactForm.addEventListener('submit', async (event) => {
+                event.preventDefault(); // Previene la recarga del navegador
+
+                // 1. Mostrar estado de enviando / Cargando
+                submitBtn.disabled = true;
+                submitSpinner.classList.remove('hidden');
+                submitIcon.classList.add('hidden');
+                submitText.textContent = 'Enviando...';
+
+                // Ocultar feedback previo
+                formFeedback.classList.add('hidden');
+                formFeedback.className = 'p-4 rounded-xl text-center text-sm font-semibold hidden';
+
+                // 2. Extraer los datos del formulario
+                const formData = {
+                    nombre: document.getElementById('form-nombre').value,
+                    email: document.getElementById('form-email').value,
+                    tipoProyecto: document.getElementById('form-tipo').value,
+                    mensaje: document.getElementById('form-mensaje').value,
+                    fechaEnvio: new Date().toISOString(),
+                    origen: window.location.href
+                };
+
+                try {
+                    // 3. Realizar la petición POST a n8n
+                    // Usamos fetch en modo 'cors' por defecto. Si tu n8n no maneja CORS,
+                    // podrías necesitar configurarlo o enviar la solicitud a través de un proxy local.
+                    const response = await fetch(N8N_WEBHOOK_URL, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(formData)
+                    });
+
+                    // 4. Procesar respuesta del servidor
+                    if (response.ok) {
+                        // Caso exitoso
+                        formFeedback.textContent = '¡Propuesta enviada con éxito! Nos pondremos en contacto pronto.';
+                        formFeedback.className = 'p-4 rounded-xl text-center text-sm font-semibold bg-brand-emerald/10 text-brand-emerald';
+                        formFeedback.classList.remove('hidden');
+                        contactForm.reset(); // Limpia los campos del formulario
+                    } else {
+                        // Respuesta HTTP no exitosa
+                        throw new Error(`Código de respuesta HTTP del servidor: ${response.status}`);
+                    }
+
+                } catch (error) {
+                    // Manejo de errores
+                    console.error('Error al enviar el formulario a n8n:', error);
+                    formFeedback.textContent = 'Hubo un inconveniente al enviar tu formulario. Por favor, inténtalo nuevamente o envíanos un correo directo.';
+                    formFeedback.className = 'p-4 rounded-xl text-center text-sm font-semibold bg-brand-rose/10 text-brand-rose';
+                    formFeedback.classList.remove('hidden');
+                } finally {
+                    // 5. Restablecer el estado del botón
+                    submitBtn.disabled = false;
+                    submitSpinner.classList.add('hidden');
+                    submitIcon.classList.remove('hidden');
+                    submitText.textContent = 'Enviar Propuesta';
+                }
+            });
+
+            // ========================================================================
+            // [GESTIÓN DEL MODAL LIGHTBOX / GALERÍA]
+            // ========================================================================
+            const lightboxModal = document.getElementById('lightbox-modal');
+            const lightboxImg = document.getElementById('lightbox-img');
+            const lightboxClose = document.getElementById('lightbox-close');
+
+            // Encontrar todas las imágenes clickeables dentro de las galerías y demos
+            const galleryTriggers = document.querySelectorAll('.cursor-zoom-in, [alt*="Demo"]');
+
+            galleryTriggers.forEach(trigger => {
+                const img = trigger.tagName === 'IMG' ? trigger : trigger.querySelector('img');
+                if (img) {
+                    trigger.addEventListener('click', () => {
+                        lightboxImg.src = img.src;
+                        lightboxImg.alt = img.alt;
+                        lightboxModal.classList.remove('hidden');
+                        setTimeout(() => {
+                            lightboxModal.classList.remove('opacity-0');
+                            lightboxModal.classList.add('opacity-100');
+                        }, 50);
+                    });
+                }
+            });
+
+            // Función para cerrar el modal
+            const closeLightbox = () => {
+                lightboxModal.classList.remove('opacity-100');
+                lightboxModal.classList.add('opacity-0');
+                setTimeout(() => {
+                    lightboxModal.classList.add('hidden');
+                }, 300);
+            };
+
+            lightboxClose.addEventListener('click', closeLightbox);
+            lightboxModal.addEventListener('click', (e) => {
+                if (e.target === lightboxModal || e.target.closest('#lightbox-close')) {
+                    closeLightbox();
+                }
+            });
+
+            // Cerrar con tecla Escape
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && !lightboxModal.classList.contains('hidden')) {
+                    closeLightbox();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
