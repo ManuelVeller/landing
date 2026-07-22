@@ -1,0 +1,5 @@
+.git
+.gitignore
+.nixpacks.json
+Dockerfile
+.dockerignore
