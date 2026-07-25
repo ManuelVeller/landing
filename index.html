@@ -177,35 +177,16 @@
                     <!-- COLUMNA MULTIMEDIA: VIDEO/DEMO Y GALERÍA (Lado Izquierdo / Superior) -->
                     <div class="lg:col-span-7 flex flex-col space-y-6">
                         <!-- Contenedor Principal de Demo (Video, GIF o Imagen) -->
-                        <div class="relative w-full aspect-video rounded-2xl overflow-hidden glass-card group border-white/5">
+                        <div class="relative w-full aspect-video rounded-2xl overflow-hidden glass-card group border-white/5 cursor-zoom-in">
                             
-                            <!-- 
-                            ========================================================================
-                            [INSTRUCCIÓN DE REEMPLAZO - MULTIMEDIA PRINCIPAL]
-                            Aquí puedes colocar tu video o GIF. Hemos preparado las siguientes opciones:
+                            <!-- Imagen de demostración por defecto (Panel de Control) -->
+                            <img id="rent-a-car-main-img" src="./assets/rent-a-car-dashboard.png" alt="Panel de Control - Dashboard Principal" class="w-full h-full object-cover group-hover:scale-103 transition-transform duration-700">
                             
-                            Opción A: TAG <video> (Video local en tu hosting o assets)
-                            Descomenta el siguiente bloque de código y cambia 'src' por tu archivo .mp4:
-                            
-                            <video src="./assets/mi-video-demo.mp4" controls autoplay muted loop class="w-full h-full object-cover"></video>
-                            
-                            Opción B: IFRAME DE YOUTUBE o LOOM (Video insertado)
-                            Reemplaza el bloque actual por el iframe provisto por YouTube/Loom:
-                            
-                            <iframe src="https://www.youtube.com/embed/TU_ID_DE_VIDEO?autoplay=0" class="w-full h-full aspect-video" frameborder="0" allowfullscreen></iframe>
-                            
-                            Opción C: IMAGEN O GIF DE DEMO (Por defecto activa a continuación)
-                            ========================================================================
-                            -->
-                            
-                            <!-- Imagen de demostración por defecto (Generada como asset real) -->
-                            <img src="./assets/rent-a-car-demo.png" alt="Rent a Car Dashboard Demo" class="w-full h-full object-cover group-hover:scale-103 transition-transform duration-700">
-                            
-                            <!-- Overlay de reproducción visual para denotar que es un espacio de video -->
-                            <div class="absolute inset-0 bg-slate-950/40 flex items-center justify-center group-hover:bg-slate-950/20 transition-all duration-300">
-                                <div class="w-16 h-16 rounded-full bg-brand-cyan/95 text-bg-dark flex items-center justify-center shadow-2xl shadow-brand-cyan/50 transform group-hover:scale-110 transition-transform cursor-pointer">
-                                    <svg class="w-7 h-7 fill-current ml-1" viewBox="0 0 24 24">
-                                        <path d="M8 5v14l11-7z"/>
+                            <!-- Overlay de ampliación visual para denotar que se puede hacer zoom -->
+                            <div class="absolute inset-0 bg-slate-950/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+                                <div class="w-16 h-16 rounded-full bg-brand-cyan/95 text-bg-dark flex items-center justify-center shadow-2xl shadow-brand-cyan/50 transform scale-90 group-hover:scale-100 transition-transform duration-300">
+                                    <svg class="w-7 h-7 text-bg-dark" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m4-3H6" />
                                     </svg>
                                 </div>
                             </div>
@@ -213,31 +194,24 @@
 
                         <!-- Mini Galería para 3 capturas de pantalla adicionales -->
                         <div class="grid grid-cols-3 gap-4">
-                            <!-- 
-                            ========================================================================
-                            [INSTRUCCIÓN DE REEMPLAZO - CAPTURAS DE PANTALLA ADICIONALES]
-                            Reemplaza las rutas del tag 'src' por tus capturas reales.
-                            Puedes usar tamaños medianos (ej: 600x400 px) para un rendimiento óptimo.
-                            ========================================================================
-                            -->
-                            <div class="aspect-video rounded-xl overflow-hidden glass-card cursor-zoom-in group border-white/5 relative">
-                                <img src="./assets/rent-a-car-demo.png" alt="Detalle de Contratos" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300">
-                                <div class="absolute inset-0 bg-brand-cyan/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                                    <svg class="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m4-3H6" /></svg>
+                            <div class="aspect-video rounded-xl overflow-hidden glass-card cursor-pointer group border-white/5 relative thumbnail-trigger ring-2 ring-transparent hover:ring-brand-cyan/50 transition-all duration-300">
+                                <img src="./assets/rent-a-car-fleet.png" alt="Control de Flota" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                                <div class="absolute inset-0 bg-brand-cyan/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center pointer-events-none">
+                                    <svg class="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
                                 </div>
                             </div>
                             
-                            <div class="aspect-video rounded-xl overflow-hidden glass-card cursor-zoom-in group border-white/5 relative">
-                                <img src="./assets/rent-a-car-demo.png" alt="Detalle de Flota" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300 filter hue-rotate-15">
-                                <div class="absolute inset-0 bg-brand-cyan/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                                    <svg class="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m4-3H6" /></svg>
+                            <div class="aspect-video rounded-xl overflow-hidden glass-card cursor-pointer group border-white/5 relative thumbnail-trigger ring-2 ring-transparent hover:ring-brand-cyan/50 transition-all duration-300">
+                                <img src="./assets/rent-a-car-history.png" alt="Historial y Curva de Uso" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                                <div class="absolute inset-0 bg-brand-cyan/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center pointer-events-none">
+                                    <svg class="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
                                 </div>
                             </div>
                             
-                            <div class="aspect-video rounded-xl overflow-hidden glass-card cursor-zoom-in group border-white/5 relative">
-                                <img src="./assets/rent-a-car-demo.png" alt="Reporte Financiero" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300 filter saturate-150">
-                                <div class="absolute inset-0 bg-brand-cyan/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                                    <svg class="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m4-3H6" /></svg>
+                            <div class="aspect-video rounded-xl overflow-hidden glass-card cursor-pointer group border-white/5 relative thumbnail-trigger ring-2 ring-transparent hover:ring-brand-cyan/50 transition-all duration-300">
+                                <img src="./assets/rent-a-car-finances.png" alt="Resumen General de Finanzas" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                                <div class="absolute inset-0 bg-brand-cyan/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center pointer-events-none">
+                                    <svg class="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
                                 </div>
                             </div>
                         </div>
@@ -717,6 +691,28 @@
                     submitIcon.classList.remove('hidden');
                     submitText.textContent = 'Enviar Propuesta';
                 }
+            });
+
+            // ========================================================================
+            // [INTERCAMBIADOR DE IMÁGENES / GALERÍA RENT A CAR]
+            // ========================================================================
+            const rentMainImg = document.getElementById('rent-a-car-main-img');
+            const rentThumbnails = document.querySelectorAll('.thumbnail-trigger img');
+
+            rentThumbnails.forEach(thumb => {
+                thumb.parentElement.addEventListener('click', () => {
+                    // Guardamos temporalmente el src y alt de la imagen principal
+                    const mainSrc = rentMainImg.src;
+                    const mainAlt = rentMainImg.alt;
+
+                    // Reemplazamos la principal con la miniatura clickeada
+                    rentMainImg.src = thumb.src;
+                    rentMainImg.alt = thumb.alt;
+
+                    // Reemplazamos la miniatura con la principal anterior
+                    thumb.src = mainSrc;
+                    thumb.alt = mainAlt;
+                });
             });
 
             // ========================================================================
