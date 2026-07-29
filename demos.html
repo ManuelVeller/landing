@@ -180,14 +180,56 @@
             </nav>
 
             <div class="flex items-center gap-4">
-                <a href="index.html#contacto" class="relative inline-flex items-center justify-center p-0.5 overflow-hidden text-xs font-bold rounded-lg group bg-gradient-to-br from-brand-cyan to-brand-violet group-hover:from-brand-cyan group-hover:to-brand-violet hover:text-white text-white focus:ring-4 focus:outline-none focus:ring-cyan-800">
+                <!-- Botón Agendar Consultoría (oculto en móviles pequeños para evitar desbordamiento) -->
+                <a href="index.html#contacto" class="hidden sm:inline-flex relative items-center justify-center p-0.5 overflow-hidden text-xs font-bold rounded-lg group bg-gradient-to-br from-brand-cyan to-brand-violet group-hover:from-brand-cyan group-hover:to-brand-violet hover:text-white text-white focus:ring-4 focus:outline-none focus:ring-cyan-800">
                     <span class="relative px-4 py-2 transition-all ease-in duration-75 bg-bg-dark rounded-md group-hover:bg-opacity-0">
                         Agendar Consultoría
                     </span>
                 </a>
+
+                <!-- Botón de Menú Móvil (Hamburguesa) -->
+                <button id="mobile-menu-btn" class="md:hidden flex items-center justify-center p-2 rounded-xl text-slate-400 hover:text-white hover:bg-white/5 border border-transparent hover:border-white/10 transition-all focus:outline-none cursor-pointer" aria-label="Abrir menú">
+                    <svg id="menu-icon-open" class="w-6 h-6 transition-all duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                    <svg id="menu-icon-close" class="w-6 h-6 hidden transition-all duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
             </div>
         </div>
     </header>
+
+    <!-- MENÚ MÓVIL DESPLEGABLE -->
+    <div id="mobile-menu" class="fixed inset-x-0 top-20 z-40 md:hidden transition-all duration-300 ease-in-out transform -translate-y-full opacity-0 pointer-events-none">
+        <div class="mx-4 mt-2 p-6 rounded-2xl bg-bg-dark/95 border border-white/10 backdrop-blur-xl shadow-2xl shadow-brand-cyan/10 flex flex-col gap-5">
+            <nav class="flex flex-col gap-4">
+                <a href="index.html#sistemas" class="mobile-nav-link flex items-center justify-between text-base font-semibold text-slate-200 hover:text-brand-cyan transition-colors px-4 py-3 rounded-xl hover:bg-white/5">
+                    <span>Sistemas</span>
+                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+                    </svg>
+                </a>
+                <a href="demos.html" class="mobile-nav-link flex items-center justify-between text-base font-semibold text-brand-cyan hover:text-brand-cyan transition-colors px-4 py-3 rounded-xl hover:bg-white/5">
+                    <span>Demos</span>
+                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+                    </svg>
+                </a>
+                <a href="index.html#contacto" class="mobile-nav-link flex items-center justify-between text-base font-semibold text-slate-200 hover:text-brand-cyan transition-colors px-4 py-3 rounded-xl hover:bg-white/5">
+                    <span>Contacto</span>
+                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+                    </svg>
+                </a>
+            </nav>
+            <div class="h-px bg-white/5 my-1"></div>
+            <!-- Botón de acción destacado dentro del menú móvil (visible en móviles pequeños) -->
+            <a href="index.html#contacto" class="mobile-nav-link w-full px-6 py-3.5 text-center font-bold text-sm bg-gradient-to-r from-brand-cyan to-brand-violet hover:from-brand-cyan/95 hover:to-brand-violet/95 text-white rounded-xl shadow-lg shadow-brand-cyan/10 hover:shadow-brand-cyan/20 transition-all hover:scale-102">
+                Agendar Consultoría
+            </a>
+        </div>
+    </div>
 
     <!-- Visual Warning Banner for Simulated/Offline Mode -->
     <div id="offline-banner" class="hidden bg-brand-amber/15 border-b border-brand-amber/30 text-brand-amber text-xs font-semibold py-2 px-4 text-center">
@@ -1998,6 +2040,44 @@
                 if (e.target === bookingAssignmentSuccessModal) {
                     closeAssignmentModal();
                 }
+            });
+
+            // ========================================================================
+            // [CONTROL DEL MENÚ MÓVIL DESPLEGABLE]
+            // ========================================================================
+            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const menuIconOpen = document.getElementById('menu-icon-open');
+            const menuIconClose = document.getElementById('menu-icon-close');
+            const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+
+            const toggleMobileMenu = () => {
+                const isClosed = mobileMenu.classList.contains('-translate-y-full');
+                if (isClosed) {
+                    // Abrir menú móvil
+                    mobileMenu.classList.remove('-translate-y-full', 'opacity-0', 'pointer-events-none');
+                    mobileMenu.classList.add('translate-y-0', 'opacity-100', 'pointer-events-auto');
+                    menuIconOpen.classList.add('hidden');
+                    menuIconClose.classList.remove('hidden');
+                } else {
+                    // Cerrar menú móvil
+                    mobileMenu.classList.remove('translate-y-0', 'opacity-100', 'pointer-events-auto');
+                    mobileMenu.classList.add('-translate-y-full', 'opacity-0', 'pointer-events-none');
+                    menuIconOpen.classList.remove('hidden');
+                    menuIconClose.classList.add('hidden');
+                }
+            };
+
+            mobileMenuBtn.addEventListener('click', toggleMobileMenu);
+
+            // Cerrar menú automáticamente cuando se hace clic en una opción
+            mobileNavLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.remove('translate-y-0', 'opacity-100', 'pointer-events-auto');
+                    mobileMenu.classList.add('-translate-y-full', 'opacity-0', 'pointer-events-none');
+                    menuIconOpen.classList.remove('hidden');
+                    menuIconClose.classList.add('hidden');
+                });
             });
 
             // 15. CARGA INICIAL (Historiales vacíos en recarga por privacidad de sesión)
