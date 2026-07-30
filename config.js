@@ -10,6 +10,6 @@ window.ENV = {
     DEMOS_BOOKING_N8N_WEBHOOK_URL: 'https://n8n.tu-servidor.com/webhook/reserva-demo',
 
     // Credenciales de conexión para Supabase (Reemplazar con tus credenciales)
-    SUPABASE_URL: 'https://tu-proyecto.supabase.co',
-    SUPABASE_ANON_KEY: 'tu-anon-key-de-supabase'
+    SUPABASE_URL: 'https://tfiyzdathkelbovfukvo.supabase.co',
+    SUPABASE_ANON_KEY: 'sb_publishable_wejq0IoFpkb_mnLl5dfIGQ_xSb1bVuS'
 };
