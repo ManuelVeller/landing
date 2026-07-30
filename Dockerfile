@@ -4,6 +4,7 @@ FROM nginx:alpine
 # Copy static files and the assets folder to Nginx's default public directory
 COPY index.html /usr/share/nginx/html/index.html
 COPY demos.html /usr/share/nginx/html/demos.html
+COPY dashboard.html /usr/share/nginx/html/dashboard.html
 COPY config.js /usr/share/nginx/html/config.js
 COPY assets/ /usr/share/nginx/html/assets/
 
