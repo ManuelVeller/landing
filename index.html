@@ -332,44 +332,23 @@
                     </div>
                 </div>
 
-                <!-- CONTENEDOR REPETIBLE: PRODUCTO 2 (EJEMPLO: CRM AUTOMATIZADO CON N8N) -->
-                <!-- id="crm-n8n" identifica este módulo de producto -->
-                <div id="producto-crm-automation" class="glass-panel rounded-3xl p-6 sm:p-10 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center relative overflow-hidden">
+                <!-- CONTENEDOR REPETIBLE: PRODUCTO 2 (GESTIÓN DE TURNOS LABORALES) -->
+                <!-- id="producto-gestion-turnos" identifica este módulo de producto -->
+                <div id="producto-gestion-turnos" class="glass-panel rounded-3xl p-6 sm:p-10 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center relative overflow-hidden">
                     <div class="absolute -top-24 -right-24 w-48 h-48 bg-brand-violet/5 rounded-full blur-3xl"></div>
                     
                     <!-- COLUMNA MULTIMEDIA: VIDEO/DEMO Y GALERÍA (Lado Izquierdo / Superior) -->
                     <div class="lg:col-span-7 flex flex-col space-y-6">
                         <!-- Contenedor Principal de Demo (Video, GIF o Imagen) -->
-                        <div class="relative w-full aspect-video rounded-2xl overflow-hidden glass-card group border-white/5">
+                        <div class="relative w-full aspect-video rounded-2xl overflow-hidden glass-card group border-white/5 cursor-zoom-in">
+                            <!-- Imagen de demostración por defecto (Diagrama de Servicio / Planilla Excel) -->
+                            <img id="turnos-main-img" src="./assets/turnos-planilla-excel.png" alt="Diagrama de Servicio Interactivo - Planilla de Turnos" class="w-full h-full object-cover group-hover:scale-103 transition-transform duration-700">
                             
-                            <!-- Imagen por defecto - en este caso mostramos una estructura sutil de API/Automatización simulada con CSS -->
-                            <div class="w-full h-full bg-slate-900 flex flex-col items-center justify-center p-8 relative">
-                                <div class="absolute inset-0 bg-[radial-gradient(#1e293b_1px,transparent_1px)] [background-size:16px_16px] opacity-40"></div>
-                                
-                                <!-- Simulación gráfica de un flujo de n8n -->
-                                <div class="flex items-center gap-4 sm:gap-8 z-10">
-                                    <div class="p-3 bg-brand-cyan/10 border border-brand-cyan/30 rounded-xl text-brand-cyan flex items-center justify-center">
-                                        <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" /></svg>
-                                    </div>
-                                    <div class="h-0.5 w-12 bg-gradient-to-r from-brand-cyan to-brand-violet relative">
-                                        <div class="absolute w-2 h-2 rounded-full bg-brand-violet -right-1 -top-0.5 animate-ping"></div>
-                                    </div>
-                                    <div class="p-4 bg-brand-violet/10 border border-brand-violet/30 rounded-2xl text-brand-violet flex items-center justify-center shadow-lg shadow-brand-violet/10">
-                                        <svg class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
-                                    </div>
-                                    <div class="h-0.5 w-12 bg-gradient-to-r from-brand-violet to-brand-emerald"></div>
-                                    <div class="p-3 bg-brand-emerald/10 border border-brand-emerald/30 rounded-xl text-brand-emerald flex items-center justify-center">
-                                        <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
-                                    </div>
-                                </div>
-                                <span class="text-xs text-slate-500 font-mono mt-6 z-10">Webhook Trigger -> CRM Lead Enrichment -> WhatsApp Notification</span>
-                            </div>
-
-                            <!-- Overlay de reproducción visual -->
-                            <div class="absolute inset-0 bg-slate-950/40 flex items-center justify-center group-hover:bg-slate-950/20 transition-all duration-300">
-                                <div class="w-16 h-16 rounded-full bg-brand-violet/95 text-bg-dark flex items-center justify-center shadow-2xl shadow-brand-violet/50 transform group-hover:scale-110 transition-transform cursor-pointer">
-                                    <svg class="w-7 h-7 fill-current ml-1" viewBox="0 0 24 24">
-                                        <path d="M8 5v14l11-7z"/>
+                            <!-- Overlay de ampliación visual para denotar que se puede hacer zoom -->
+                            <div class="absolute inset-0 bg-slate-950/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+                                <div class="w-16 h-16 rounded-full bg-brand-violet/95 text-bg-dark flex items-center justify-center shadow-2xl shadow-brand-violet/50 transform scale-90 group-hover:scale-100 transition-transform duration-300">
+                                    <svg class="w-7 h-7 text-bg-dark" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m4-3H6" />
                                     </svg>
                                 </div>
                             </div>
@@ -377,14 +356,23 @@
 
                         <!-- Mini Galería para 3 capturas de pantalla adicionales -->
                         <div class="grid grid-cols-3 gap-4">
-                            <div class="aspect-video rounded-xl bg-slate-900 border border-white/5 flex items-center justify-center cursor-pointer hover:border-brand-violet/30 transition-colors">
-                                <span class="text-xs text-slate-500 font-mono">[Trigger Webhook]</span>
+                            <div class="aspect-video rounded-xl overflow-hidden glass-card cursor-pointer group border-white/5 relative thumbnail-trigger-turnos ring-2 ring-transparent hover:ring-brand-violet/50 transition-all duration-300">
+                                <img src="./assets/turnos-calendario-asignacion.png" alt="Calendario de Asignación General" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                                <div class="absolute inset-0 bg-brand-violet/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center pointer-events-none">
+                                    <svg class="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
+                                </div>
                             </div>
-                            <div class="aspect-video rounded-xl bg-slate-900 border border-white/5 flex items-center justify-center cursor-pointer hover:border-brand-violet/30 transition-colors">
-                                <span class="text-xs text-slate-500 font-mono">[n8n Flow Diagram]</span>
+                            <div class="aspect-video rounded-xl overflow-hidden glass-card cursor-pointer group border-white/5 relative thumbnail-trigger-turnos ring-2 ring-transparent hover:ring-brand-violet/50 transition-all duration-300">
+                                <img src="./assets/turnos-calendario-personal.png" alt="Mi Calendario Mensual Personalizado" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                                <div class="absolute inset-0 bg-brand-violet/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center pointer-events-none">
+                                    <svg class="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
+                                </div>
                             </div>
-                            <div class="aspect-video rounded-xl bg-slate-900 border border-white/5 flex items-center justify-center cursor-pointer hover:border-brand-violet/30 transition-colors">
-                                <span class="text-xs text-slate-500 font-mono">[WhatsApp API]</span>
+                            <div class="aspect-video rounded-xl overflow-hidden glass-card cursor-pointer group border-white/5 relative thumbnail-trigger-turnos ring-2 ring-transparent hover:ring-brand-violet/50 transition-all duration-300">
+                                <img src="./assets/turnos-chat-administracion.png" alt="Chat Integrado con Administración" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                                <div class="absolute inset-0 bg-brand-violet/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center pointer-events-none">
+                                    <svg class="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -394,18 +382,18 @@
                         <div class="space-y-4">
                             <!-- Categoría y Estado -->
                             <div class="flex items-center gap-3">
-                                <span class="px-2.5 py-0.5 rounded-md bg-brand-violet/10 text-brand-violet text-xs font-semibold uppercase tracking-wider">Integraciones & APIs</span>
-                                <span class="px-2.5 py-0.5 rounded-md bg-brand-emerald/10 text-brand-emerald text-xs font-semibold">Activo en Producción</span>
+                                <span class="px-2.5 py-0.5 rounded-md bg-brand-violet/10 text-brand-violet text-xs font-semibold uppercase tracking-wider">Recursos Humanos & Gestión</span>
+                                <span class="px-2.5 py-0.5 rounded-md bg-brand-emerald/10 text-brand-emerald text-xs font-semibold">Estable & Operativo</span>
                             </div>
                             <!-- Título del Sistema -->
-                            <h3 class="text-2xl sm:text-3xl font-bold tracking-tight text-white">Automatización de CRM & Leads</h3>
+                            <h3 class="text-2xl sm:text-3xl font-bold tracking-tight text-white">Gestión Interna de Turnos Laborales</h3>
                             <!-- Descripción general -->
                             <p class="text-sm text-slate-200">
-                                Conexión directa entre formularios web, enriquecimiento de datos de prospectos mediante base de datos pública de empresas, alertas instantáneas en Slack y mensajes automatizados a WhatsApp.
+                                Plataforma a medida que ayuda en la planificación, asignación, seguimiento de turnos rotativos y la comunicación interna.
                             </p>
                         </div>
 
-                        <!-- Estructura de 3 Partes: Problema, Solución y Beneficio -->
+                        <!-- Estructura de 3 Partes: Problema, Objetivo y Solución -->
                         <div class="space-y-4">
                             
                             <!-- PARTE 1: EL PROBLEMA -->
@@ -415,29 +403,33 @@
                                     El Problema
                                 </h4>
                                 <p class="text-xs sm:text-sm text-slate-100">
-                                    Los clientes potenciales esperaban hasta 24 horas para ser atendidos. El equipo de ventas perdía tiempo buscando los perfiles de LinkedIn de los clientes y contactándolos de forma manual de uno a uno.
+                                    Previamente se gestionaba todo desde una plantilla de Excel, dificultando el seguimiento, visualización y conteo de horas.
                                 </p>
                             </div>
 
-                            <!-- PARTE 2: CÓMO LO SOLUCIONA -->
-                            <div class="p-4 rounded-xl bg-brand-cyan/5 border-l-4 border-brand-cyan space-y-1">
-                                <h4 class="text-xs font-bold uppercase text-brand-cyan tracking-wider flex items-center gap-1.5">
-                                    <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg>
-                                    Cómo lo soluciona
+                            <!-- PARTE 2: EL OBJETIVO -->
+                            <div class="p-4 rounded-xl bg-brand-amber/5 border-l-4 border-brand-amber space-y-1">
+                                <h4 class="text-xs font-bold uppercase text-brand-amber tracking-wider flex items-center gap-1.5">
+                                    <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                                        <circle cx="12" cy="12" r="9" />
+                                        <circle cx="12" cy="12" r="5" />
+                                        <circle cx="12" cy="12" r="1.5" fill="currentColor" />
+                                    </svg>
+                                    El Objetivo
                                 </h4>
                                 <p class="text-xs sm:text-sm text-slate-100">
-                                    Implementamos un webhook con n8n que recibe el lead, busca automáticamente la información de la empresa (tamaño, sector, facturación) y lo asigna al comercial por WhatsApp con un mensaje personalizado.
+                                    Modernizar sin desarmar la cultura de trabajo, manteniendo una interfaz con uso simple.
                                 </p>
                             </div>
 
-                            <!-- PARTE 3: RESULTADO / BENEFICIO PRINCIPAL -->
+                            <!-- PARTE 3: LA SOLUCIÓN -->
                             <div class="p-4 rounded-xl bg-brand-emerald/5 border-l-4 border-brand-emerald space-y-1">
                                 <h4 class="text-xs font-bold uppercase text-brand-emerald tracking-wider flex items-center gap-1.5">
-                                    <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                                    Beneficio Principal
+                                    <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                                    La Solución
                                 </h4>
                                 <p class="text-xs sm:text-sm text-slate-100">
-                                    Tiempo de primera respuesta reducido a <strong class="text-white font-semibold">menos de 2 minutos</strong>. Incremento del 32% en la conversión de llamadas agendadas debido a la inmediatez del contacto.
+                                    Panel web que procesa los datos extraídos del Excel tradicional, facilitando el orden y la visualización a nivel general.
                                 </p>
                             </div>
 
@@ -446,11 +438,12 @@
                         <!-- CTA del producto específico -->
                         <div class="pt-2">
                             <a href="#contacto" class="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold text-brand-violet hover:text-white transition-colors group/link whitespace-nowrap">
-                                Solicitar Integración Similar
+                                Solicitar Demo de Turnos
                                 <svg class="w-4 h-4 transform group-hover/link:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
                             </a>
                         </div>
                     </div>
+                </div>
                 </div>
 
             </div>
@@ -459,105 +452,72 @@
         <!-- 3. SECCIÓN QA & TESTING (MI SELLO DE CALIDAD) -->
         <section id="calidad" class="space-y-16">
             <div class="text-center space-y-4">
-                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-emerald/10 text-xs font-semibold text-brand-emerald uppercase tracking-wider">
-                    QA & Estabilidad
-                </div>
                 <h2 class="text-3xl sm:text-5xl font-bold tracking-tight">Sello de Calidad y Robustez</h2>
-                <p class="text-slate-200 max-w-xl mx-auto">No solo escribo código; entrego software diseñado para fallar cero veces. Mi metodología de testing integrada.</p>
             </div>
 
             <!-- Estructura de Tarjetas QA -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 
-                <!-- Tarjeta 1: Casos de Prueba -->
+                <!-- Tarjeta 1: Confiabilidad Diaria -->
                 <div class="glass-card rounded-2xl p-6 sm:p-8 space-y-6 flex flex-col justify-between">
                     <div class="space-y-4">
                         <div class="w-12 h-12 rounded-xl bg-brand-cyan/10 border border-brand-cyan/20 flex items-center justify-center text-brand-cyan">
-                            <!-- Icono Casos de Prueba -->
+                            <!-- Icono Casos de Prueba / Confiabilidad -->
                             <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
                             </svg>
                         </div>
-                        <h3 class="text-xl font-bold text-white">Casos de Prueba Rigurosos</h3>
+                        <h3 class="text-xl font-bold text-white">Confiabilidad Diaria</h3>
                         <p class="text-sm text-slate-200 leading-relaxed">
-                            Diseño de matrices de casos de prueba manuales y automatizados. Validamos flujos principales, caminos alternativos y entradas inválidas para evitar comportamientos inesperados de los usuarios en producción.
+                            Flujos probados para garantizar que los cálculos, cargas y registros siempre sean exactos, evitando errores humanos.
                         </p>
                     </div>
                     <div class="text-xs text-brand-cyan font-mono pt-4 border-t border-white/5">
-                        ✓ Cobertura de flujos críticos
+                        ✓ Cálculos y registros 100% exactos
                     </div>
                 </div>
 
-                <!-- Tarjeta 2: Test de APIs -->
+                <!-- Tarjeta 2: Integraciones Seguras -->
                 <div class="glass-card rounded-2xl p-6 sm:p-8 space-y-6 flex flex-col justify-between">
                     <div class="space-y-4">
                         <div class="w-12 h-12 rounded-xl bg-brand-violet/10 border border-brand-violet/20 flex items-center justify-center text-brand-violet">
-                            <!-- Icono Test de APIs -->
+                            <!-- Icono Test de APIs / Integraciones -->
                             <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                             </svg>
                         </div>
-                        <h3 class="text-xl font-bold text-white">Testing de APIs & Integraciones</h3>
+                        <h3 class="text-xl font-bold text-white">Integraciones Seguras</h3>
                         <p class="text-sm text-slate-200 leading-relaxed">
-                            Verificamos payloads JSON, validaciones de esquemas y códigos de respuesta HTTP de cada integración (REST/GraphQL). Aseguramos que la comunicación interna de datos sea consistente y resistente a fallos de conectividad.
+                            Conexión estable entre sistemas (Excel, bases de datos y web) asegurando que la información nunca se pierda.
                         </p>
                     </div>
                     <div class="text-xs text-brand-violet font-mono pt-4 border-t border-white/5">
-                        ✓ Pruebas de integración & estrés
+                        ✓ Sincronización sin pérdidas de datos
                     </div>
                 </div>
 
-                <!-- Tarjeta 3: Reportes de Errores / Estabilidad -->
+                <!-- Tarjeta 3: Soporte Técnico -->
                 <div class="glass-card rounded-2xl p-6 sm:p-8 space-y-6 flex flex-col justify-between">
                     <div class="space-y-4">
                         <div class="w-12 h-12 rounded-xl bg-brand-emerald/10 border border-brand-emerald/20 flex items-center justify-center text-brand-emerald">
-                            <!-- Icono Reportes y Monitoreo -->
+                            <!-- Icono Soporte / Ayuda -->
                             <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z" />
                             </svg>
                         </div>
-                        <h3 class="text-xl font-bold text-white">Reportes de Estabilidad</h3>
+                        <h3 class="text-xl font-bold text-white">Soporte Técnico</h3>
                         <p class="text-sm text-slate-200 leading-relaxed">
-                            Monitoreo activo de logs de error en producción. Integramos trackers que disparan webhooks de alerta cuando ocurren fallos. El software cuenta con lógica resiliente para auto-repararse y reintentar procesos.
+                            Acompañamiento continuo y disponibilidad directa para resolver cualquier inconveniente o duda que surja, asegurando que el sistema nunca deje de funcionar.
                         </p>
                     </div>
                     <div class="text-xs text-brand-emerald font-mono pt-4 border-t border-white/5">
-                        ✓ Alertas automáticas n8n / Discord
+                        ✓ Disponibilidad & resolución directa
                     </div>
                 </div>
 
             </div>
 
-            <!-- Gráfico/Dashboard de Calidad Realista (Opcional pero visualmente asombroso) -->
-            <div class="glass-panel rounded-3xl p-6 sm:p-8 border-white/5 overflow-hidden">
-                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-                    <div class="lg:col-span-5 space-y-6">
-                        <h3 class="text-2xl font-bold text-white tracking-tight">Monitoreo y Dashboard de Integridad</h3>
-                        <p class="text-sm text-slate-200 leading-relaxed">
-                            Esta visualización simula la infraestructura de logs de calidad implementada en tiempo real. Todas las llamadas y peticiones son validadas en su origen para mantener la salud operativa en el 99.9%.
-                        </p>
-                        <ul class="space-y-2 text-xs sm:text-sm text-slate-200 font-mono">
-                            <li class="flex items-center gap-2 text-brand-emerald">
-                                <span class="w-1.5 h-1.5 rounded-full bg-brand-emerald"></span>
-                                [OK] Core Engine API - 14.5ms avg latency
-                            </li>
-                            <li class="flex items-center gap-2 text-brand-emerald">
-                                <span class="w-1.5 h-1.5 rounded-full bg-brand-emerald"></span>
-                                [OK] Database Write-Through Sync - Success
-                            </li>
-                            <li class="flex items-center gap-2 text-brand-emerald">
-                                <span class="w-1.5 h-1.5 rounded-full bg-brand-emerald"></span>
-                                [OK] n8n Webhook Endpoint Listener - 200 OK
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="lg:col-span-7">
-                        <div class="rounded-xl overflow-hidden glass-card border-white/5 shadow-2xl">
-                            <img src="./assets/qa-metrics.png" alt="QA Dashboard Metrics" class="w-full h-auto object-cover">
-                        </div>
-                    </div>
-                </div>
-            </div>
+
         </section>
 
         <!-- 4. SECCIÓN DE CONTACTO (FORMULARIO CON WEBHOOK DE N8N) -->
@@ -773,7 +733,7 @@
             // [INTERCAMBIADOR DE IMÁGENES / GALERÍA RENT A CAR]
             // ========================================================================
             const rentMainImg = document.getElementById('rent-a-car-main-img');
-            const rentThumbnails = document.querySelectorAll('.thumbnail-trigger img');
+            const rentThumbnails = document.querySelectorAll('#producto-rent-a-car .thumbnail-trigger img');
 
             rentThumbnails.forEach(thumb => {
                 thumb.parentElement.addEventListener('click', () => {
@@ -784,6 +744,28 @@
                     // Reemplazamos la principal con la miniatura clickeada
                     rentMainImg.src = thumb.src;
                     rentMainImg.alt = thumb.alt;
+
+                    // Reemplazamos la miniatura con la principal anterior
+                    thumb.src = mainSrc;
+                    thumb.alt = mainAlt;
+                });
+            });
+
+            // ========================================================================
+            // [INTERCAMBIADOR DE IMÁGENES / GALERÍA GESTIÓN DE TURNOS]
+            // ========================================================================
+            const turnosMainImg = document.getElementById('turnos-main-img');
+            const turnosThumbnails = document.querySelectorAll('.thumbnail-trigger-turnos img');
+
+            turnosThumbnails.forEach(thumb => {
+                thumb.parentElement.addEventListener('click', () => {
+                    // Guardamos temporalmente el src y alt de la imagen principal
+                    const mainSrc = turnosMainImg.src;
+                    const mainAlt = turnosMainImg.alt;
+
+                    // Reemplazamos la principal con la miniatura clickeada
+                    turnosMainImg.src = thumb.src;
+                    turnosMainImg.alt = thumb.alt;
 
                     // Reemplazamos la miniatura con la principal anterior
                     thumb.src = mainSrc;
