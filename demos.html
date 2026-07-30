@@ -831,6 +831,25 @@
                 }
             }
 
+            // --- FUNCIÓN DE ANALÍTICAS / EVENT LOGS ---
+            async function logEvent(demoName, eventType, metadata = {}) {
+                console.log(`[Demo Event] Demo: ${demoName}, Type: ${eventType}`, metadata);
+                if (isMockMode || !supabase) return;
+                try {
+                    await supabase.from('demo_events').insert([{
+                        demo_name: demoName,
+                        event_type: eventType,
+                        user_agent: navigator.userAgent,
+                        metadata: metadata
+                    }]);
+                } catch (err) {
+                    console.error("Falla al registrar evento de analítica:", err);
+                }
+            }
+
+            // Registrar vista de la página de demos
+            logEvent('demos_page', 'view');
+
             // 3. ESTADO LOCAL (PARA GESTIONAR TEMPORIZADORES Y CACHE DE TARJETAS)
             let orders = [];
             const activeTimers = {}; // Guarda timeouts activos para cada pedido
@@ -908,6 +927,7 @@
                     // Click on map to move marker and reverse geocode
                     map.on('click', async function(e) {
                         mapMarker.setLatLng(e.latlng);
+                        logEvent('demo_booking', 'map_clicked', { lat: e.latlng.lat, lng: e.latlng.lng });
                         await reverseGeocode(e.latlng.lat, e.latlng.lng);
                     });
 
@@ -958,10 +978,11 @@
 
             // Tab Switcher Logic
             function switchTab(activeTab) {
+                logEvent('demo_selector', 'tab_change', { tab: activeTab });
                 if (activeTab === 'kanban') {
                     // Update Tabs buttons styling
-                    tabKanban.className = "px-5 py-3 rounded-xl text-xs sm:text-sm font-bold transition-all duration-300 flex items-center gap-2 cursor-pointer bg-gradient-to-r from-brand-cyan to-brand-violet text-white shadow-lg shadow-brand-cyan/10";
-                    tabBooking.className = "px-5 py-3 rounded-xl text-xs sm:text-sm font-bold transition-all duration-300 flex items-center gap-2 cursor-pointer text-slate-400 hover:text-white";
+                    tabKanban.className = "px-4 py-3 rounded-xl text-xs sm:text-sm font-bold transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer bg-gradient-to-r from-brand-cyan to-brand-violet text-white shadow-lg shadow-brand-cyan/10 w-full sm:w-auto";
+                    tabBooking.className = "px-4 py-3 rounded-xl text-xs sm:text-sm font-bold transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer text-slate-400 hover:text-white w-full sm:w-auto";
                     
                     // Show Kanban, Hide Booking
                     demoKanbanContainer.classList.remove('hidden');
@@ -972,8 +993,8 @@
                     demoDesc.innerHTML = 'Experimenta cómo se conectan los datos entre la interfaz del cliente y el panel de control del administrador en tiempo real mediante Supabase, webhooks de n8n y automatización de estados.';
                 } else if (activeTab === 'booking') {
                     // Update Tabs buttons styling
-                    tabBooking.className = "px-5 py-3 rounded-xl text-xs sm:text-sm font-bold transition-all duration-300 flex items-center gap-2 cursor-pointer bg-gradient-to-r from-brand-cyan to-brand-violet text-white shadow-lg shadow-brand-cyan/10";
-                    tabKanban.className = "px-5 py-3 rounded-xl text-xs sm:text-sm font-bold transition-all duration-300 flex items-center gap-2 cursor-pointer text-slate-400 hover:text-white";
+                    tabBooking.className = "px-4 py-3 rounded-xl text-xs sm:text-sm font-bold transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer bg-gradient-to-r from-brand-cyan to-brand-violet text-white shadow-lg shadow-brand-cyan/10 w-full sm:w-auto";
+                    tabKanban.className = "px-4 py-3 rounded-xl text-xs sm:text-sm font-bold transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer text-slate-400 hover:text-white w-full sm:w-auto";
                     
                     // Show Booking, Hide Kanban
                     demoBookingContainer.classList.remove('hidden');
@@ -982,7 +1003,7 @@
                     // Update Title & Description
                     demoTitle.innerHTML = 'Reserva + Google Maps <span class="text-gradient">&amp; Calendar</span>';
                     demoDesc.innerHTML = 'Observa en tiempo real cómo se geolocaliza una dirección y se calcula el traslado en Google Maps, y cómo se agenda una cita en Google Calendar automáticamente.';
-
+ 
                     // Initialize Leaflet Map
                     initBookingMap();
                 }
@@ -1306,6 +1327,11 @@
                 }
 
                 function triggerAlertsAndTimers() {
+                    logEvent('demo_kanban', 'order_status_changed', {
+                        orderId: id,
+                        newStatus: newStatus,
+                        isManual: isManual
+                    });
                     // Alerta Toast
                     let niceStatus = "Pendiente";
                     let type = "info";
@@ -1430,6 +1456,10 @@
                     renderKanban();
                     startAllTimers();
                     
+                    logEvent('demo_kanban', 'order_placed', {
+                        client: clienteNombre,
+                        productsCount: selectedProducts.length
+                    });
                     handleSuccess();
                 } else {
                     try {
@@ -1453,12 +1483,21 @@
                             startAllTimers();
                         }
 
+                        logEvent('demo_kanban', 'order_placed', {
+                            client: clienteNombre,
+                            productsCount: selectedProducts.length
+                        });
                         handleSuccess();
                     } catch (err) {
                         console.error("Error al registrar pedido en Supabase:", err);
                         orderFeedback.textContent = 'Error al registrar tu pedido en la base de datos de Supabase. Revisa la consola para más detalles.';
                         orderFeedback.className = 'p-4 rounded-xl text-center text-sm font-semibold bg-brand-rose/10 text-brand-rose';
                         orderFeedback.classList.remove('hidden');
+                        
+                        logEvent('demo_kanban', 'order_failed', {
+                            client: clienteNombre,
+                            error: err.message
+                        });
                     }
                 }
 
@@ -1909,6 +1948,13 @@
                 bookings.unshift(newlyCreatedBooking);
                 renderBookings();
                 
+                logEvent('demo_booking', 'booking_confirmed', {
+                    client: activeBookingPayload.cliente,
+                    driver: activeBookingPayload.chofer,
+                    car: activeBookingPayload.auto,
+                    address: activeBookingPayload.direccion
+                });
+
                 // Mostrar Popup 2: Chofer y Auto Asignados (Confirmación de recursos)
                 showAssignmentSuccessModal(activeBookingPayload);
             }
@@ -1945,6 +1991,11 @@
                     bookingFeedback.textContent = 'Hubo un inconveniente durante el procesamiento automatizado. Por favor intenta de nuevo.';
                     bookingFeedback.className = 'p-4 rounded-xl text-center text-sm font-semibold bg-brand-rose/10 text-brand-rose';
                     bookingFeedback.classList.remove('hidden');
+                    
+                    logEvent('demo_booking', 'booking_failed', {
+                        client: clientName,
+                        error: err.message
+                    });
                 } finally {
                     bookingSubmitBtn.disabled = false;
                     bookingSubmitSpinner.classList.add('hidden');

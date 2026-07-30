@@ -1,0 +1,146 @@
+{
+  "name": "Landing Contact Flow",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "contacto-landing",
+        "options": {}
+      },
+      "id": "webhook-trigger-node",
+      "name": "Webhook Trigger",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        250,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "create",
+        "table": "contacts_leads",
+        "fields": [
+          "name",
+          "email",
+          "message",
+          "demo_id",
+          "status"
+        ],
+        "valuesToSend": {
+          "values": [
+            {
+              "field": "name",
+              "valueValue": "={{ $json.nombre }}"
+            },
+            {
+              "field": "email",
+              "valueValue": "={{ $json.email }}"
+            },
+            {
+              "field": "message",
+              "valueValue": "={{ $json.mensaje }}"
+            },
+            {
+              "field": "demo_id",
+              "valueValue": "={{ $json.tipoProyecto }}"
+            },
+            {
+              "field": "status",
+              "valueValue": "nuevo"
+            }
+          ]
+        }
+      },
+      "id": "supabase-insert-node",
+      "name": "Supabase Insert",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        450,
+        300
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "supabase-api-cred-id",
+          "name": "Supabase Admin Access"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "YOUR_DISCORD_CHANNEL_OR_WEBHOOK_URL",
+        "text": "=🔔 **Nuevo Lead Recibido**:\n- **Nombre**: {{ $json.name }}\n- **Email**: {{ $json.email }}\n- **Proyecto/Interés**: {{ $json.demo_id }}\n- **Mensaje**: {{ $json.message }}"
+      },
+      "id": "discord-notify-node",
+      "name": "Discord Notification",
+      "type": "n8n-nodes-base.discord",
+      "typeVersion": 1,
+      "position": [
+        650,
+        200
+      ],
+      "credentials": {
+        "discordWebhookApi": {
+          "id": "discord-cred-id",
+          "name": "Discord Webhook Alert"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fromEmail": "Manuel Veller Pérez <onboarding@resend.dev>",
+        "toEmail": "={{ $json.email }}",
+        "subject": "¡Gracias por probar la demo! 🚀",
+        "html": "=Hola {{ $json.name }},<br><br>\n\n¡Muchas gracias por tomarte el tiempo de probar la demo!<br><br>\n\nEspero que te haya resultado útil. Si te surgió alguna duda, querés hacerme algún comentario o te interesa que conversemos más a fondo sobre el proyecto, podés responder directamente a este correo.<br><br>\n\n¡Que tengas un excelente día!<br><br>\n\nSaludos,<br>\nManuel Veller Pérez"
+      },
+      "id": "resend-email-node",
+      "name": "Resend Autoresponder",
+      "type": "n8n-nodes-base.resend",
+      "typeVersion": 1,
+      "position": [
+        650,
+        400
+      ],
+      "credentials": {
+        "resendApi": {
+          "id": "resend-api-cred-id",
+          "name": "Resend Auto Email API"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Webhook Trigger": {
+      "main": [
+        [
+          {
+            "node": "Supabase Insert",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase Insert": {
+      "main": [
+        [
+          {
+            "node": "Discord Notification",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Resend Autoresponder",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {},
+  "staticData": null,
+  "meta": null,
+  "pinData": {}
+}

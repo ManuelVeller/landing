@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Control Interno | soluciones de gestión interna</title>
+    
+    <!-- Google Fonts: Outfit & Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS v4 Play CDN -->
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+    
+    <!-- Supabase JS Client CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Configuración Global -->
+    <script src="./config.js"></script>
+
+    <!-- Custom CSS utilities matching landing style -->
+    <style type="text/css">
+        :root {
+            --color-bg-dark: #0B0F19;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--color-bg-dark);
+            color: #f8fafc;
+            position: relative;
+        }
+        .font-display {
+            font-family: 'Outfit', sans-serif;
+        }
+        .glass-card {
+            background: rgba(15, 23, 42, 0.45);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+        }
+        .text-gradient {
+            background: linear-gradient(135deg, #06b6d4 0%, #8b5cf6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        /* Custom scrollbar matching dark theme */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(15, 23, 42, 0.2);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 99px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col overflow-x-hidden">
+
+    <!-- Absolute background glows -->
+    <div class="absolute top-0 left-1/4 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl -z-10 pointer-events-none"></div>
+    <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl -z-10 pointer-events-none"></div>
+
+    <!-- ================= AUTH LOGIN SCREEN ================= -->
+    <div id="login-container" class="flex-1 flex items-center justify-center p-6 hidden">
+        <div class="glass-card border border-white/10 rounded-3xl p-8 max-w-md w-full shadow-2xl space-y-6">
+            <div class="text-center space-y-3">
+                <!-- Circular Logo Badge -->
+                <div class="w-16 h-16 rounded-full border border-white/10 bg-white/5 flex items-center justify-center overflow-hidden mx-auto">
+                    <img src="./assets/logo.png" alt="Logo" class="w-10 h-10 object-contain">
+                </div>
+                <h1 class="text-2xl font-display font-extrabold tracking-tight">Panel de Control</h1>
+                <p class="text-xs text-slate-400">Ingresa tus credenciales de Supabase Auth para acceder a las métricas privadas.</p>
+            </div>
+            
+            <form id="login-form" class="space-y-4">
+                <div class="space-y-1.5">
+                    <label for="login-email" class="text-xs font-bold uppercase tracking-wider text-slate-400">Email Administrativo</label>
+                    <input type="email" id="login-email" required class="w-full bg-slate-900/60 border border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-brand-cyan transition-colors" placeholder="admin@ejemplo.com">
+                </div>
+                <div class="space-y-1.5">
+                    <label for="login-password" class="text-xs font-bold uppercase tracking-wider text-slate-400">Contraseña</label>
+                    <input type="password" id="login-password" required class="w-full bg-slate-900/60 border border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-brand-cyan transition-colors" placeholder="••••••••">
+                </div>
+                <div id="login-error" class="text-xs font-semibold text-rose-400 text-center hidden">Credenciales inválidas</div>
+                <button type="submit" id="login-submit-btn" class="w-full py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-purple-600 hover:from-cyan-400 hover:to-purple-500 text-white font-bold text-sm shadow-lg shadow-cyan-500/10 hover:shadow-cyan-500/20 transition-all cursor-pointer flex items-center justify-center gap-2">
+                    <span>Iniciar Sesión</span>
+                    <svg id="login-spinner" class="w-4 h-4 animate-spin hidden" viewBox="0 0 24 24" fill="none">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+                    </svg>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ================= DASHBOARD MAIN SCREEN ================= -->
+    <div id="dashboard-container" class="flex-1 flex flex-col hidden">
+        <!-- HEADER -->
+        <header class="border-b border-white/5 bg-bg-dark/80 backdrop-blur-md sticky top-0 z-40">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-full border border-white/10 bg-white/5 flex items-center justify-center overflow-hidden">
+                        <img src="./assets/logo.png" alt="Logo" class="w-7 h-7 object-contain">
+                    </div>
+                    <div>
+                        <span class="font-display font-extrabold text-sm sm:text-base tracking-tight bg-gradient-to-r from-white to-slate-400 bg-clip-text text-transparent block">soluciones de gestión interna</span>
+                        <span class="text-[10px] uppercase font-mono tracking-widest text-cyan-400 block -mt-0.5">Panel de Control</span>
+                    </div>
+                </div>
+                <button id="logout-btn" class="px-4 py-2 text-xs font-bold rounded-lg border border-white/10 bg-white/5 hover:bg-white/10 text-slate-300 hover:text-white transition-all cursor-pointer">
+                    Cerrar Sesión
+                </button>
+            </div>
+        </header>
+
+        <!-- MAIN LAYOUT -->
+        <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-1 w-full space-y-8">
+            <!-- Warning Alert for Demo/Simulated Mode -->
+            <div id="dashboard-mock-warning" class="hidden bg-amber-500/10 border border-amber-500/20 rounded-2xl p-4 text-amber-400 text-xs font-semibold flex items-center gap-3">
+                <svg class="w-5 h-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+                <span><strong>Modo de Simulación Activo:</strong> Supabase no está configurado. Las métricas que ves a continuación son estáticas y de prueba.</span>
+            </div>
+
+            <!-- METRIC CARDS ROW -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Card 1: Leads Totales -->
+                <div class="glass-card border border-white/5 rounded-2xl p-6 flex items-center justify-between relative overflow-hidden">
+                    <div class="absolute -bottom-6 -right-6 w-24 h-24 bg-cyan-500/5 rounded-full blur-xl"></div>
+                    <div class="space-y-1">
+                        <span class="text-xs font-bold uppercase tracking-wider text-slate-400">Propuestas / Contactos</span>
+                        <h2 id="metric-leads" class="text-3xl font-display font-extrabold text-white">0</h2>
+                        <span class="text-[10px] text-emerald-400 font-medium">Recibidos vía Webhook</span>
+                    </div>
+                    <div class="w-12 h-12 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-400">
+                        <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                    </div>
+                </div>
+
+                <!-- Card 2: Eventos Totales -->
+                <div class="glass-card border border-white/5 rounded-2xl p-6 flex items-center justify-between relative overflow-hidden">
+                    <div class="absolute -bottom-6 -right-6 w-24 h-24 bg-purple-500/5 rounded-full blur-xl"></div>
+                    <div class="space-y-1">
+                        <span class="text-xs font-bold uppercase tracking-wider text-slate-400">Interacciones en Demos</span>
+                        <h2 id="metric-events" class="text-3xl font-display font-extrabold text-white">0</h2>
+                        <span class="text-[10px] text-slate-400 font-mono">Clics, Reproducciones y Vistas</span>
+                    </div>
+                    <div class="w-12 h-12 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400">
+                        <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122"/></svg>
+                    </div>
+                </div>
+
+                <!-- Card 3: Leads de Hoy -->
+                <div class="glass-card border border-white/5 rounded-2xl p-6 flex items-center justify-between relative overflow-hidden">
+                    <div class="absolute -bottom-6 -right-6 w-24 h-24 bg-pink-500/5 rounded-full blur-xl"></div>
+                    <div class="space-y-1">
+                        <span class="text-xs font-bold uppercase tracking-wider text-slate-400">Contactos Hoy</span>
+                        <h2 id="metric-leads-today" class="text-3xl font-display font-extrabold text-white">0</h2>
+                        <span class="text-[10px] text-pink-400 font-medium">Últimas 24 horas</span>
+                    </div>
+                    <div class="w-12 h-12 rounded-xl bg-pink-500/10 border border-pink-500/20 flex items-center justify-center text-pink-400">
+                        <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CHARTS SECTION -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                <!-- Gráfico de distribución de eventos -->
+                <div class="lg:col-span-8 glass-card border border-white/5 rounded-2xl p-6 space-y-4">
+                    <h3 class="text-sm font-bold uppercase tracking-wider text-slate-400">Flujo de Tráfico por Demo</h3>
+                    <div class="h-64 w-full relative">
+                        <canvas id="traffic-chart"></canvas>
+                    </div>
+                </div>
+                <!-- Gráfico de Conversión / Tipos de Eventos -->
+                <div class="lg:col-span-4 glass-card border border-white/5 rounded-2xl p-6 space-y-4">
+                    <h3 class="text-sm font-bold uppercase tracking-wider text-slate-400">Tipos de Acciones</h3>
+                    <div class="h-64 w-full relative flex justify-center">
+                        <canvas id="actions-chart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CONTACT LEADS TABLE -->
+            <div class="glass-card border border-white/5 rounded-2xl p-6 space-y-4">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <div>
+                        <h3 class="text-base font-bold text-white">Formularios de Contacto Recibidos</h3>
+                        <p class="text-xs text-slate-400">Listado de personas interesadas en cotizar o probar soluciones.</p>
+                    </div>
+                    <!-- Export simple data as CSV (Nice touch!) -->
+                    <button id="export-csv-btn" class="self-start sm:self-center px-4 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow-lg shadow-emerald-600/10 hover:shadow-emerald-600/20 transition-all cursor-pointer">
+                        Exportar CSV
+                    </button>
+                </div>
+
+                <div class="overflow-x-auto w-full rounded-xl border border-white/5 bg-slate-950/20">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="border-b border-white/10 bg-slate-900/60 text-[10px] font-bold uppercase tracking-widest text-slate-400">
+                                <th class="p-4">Contacto</th>
+                                <th class="p-4">Mensaje</th>
+                                <th class="p-4">Demo / Interés</th>
+                                <th class="p-4">Fecha</th>
+                                <th class="p-4 text-center">Estado</th>
+                            </tr>
+                        </thead>
+                        <tbody id="leads-table-body" class="divide-y divide-white/5 text-sm text-slate-200">
+                            <tr>
+                                <td colspan="5" class="p-8 text-center text-slate-500 italic">Cargando leads...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- SCRIPT DE CONTROL Y COMUNICACIÓN CON SUPABASE -->
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const loginContainer = document.getElementById('login-container');
+            const dashboardContainer = document.getElementById('dashboard-container');
+            const loginForm = document.getElementById('login-form');
+            const loginSubmitBtn = document.getElementById('login-submit-btn');
+            const loginSpinner = document.getElementById('login-spinner');
+            const loginError = document.getElementById('login-error');
+            const logoutBtn = document.getElementById('logout-btn');
+            const mockWarning = document.getElementById('dashboard-mock-warning');
+
+            const tableBody = document.getElementById('leads-table-body');
+            const exportCsvBtn = document.getElementById('export-csv-btn');
+
+            // 1. OBTENER CONFIGURACIONES DE SUPABASE
+            const SUPABASE_URL = (window.ENV && window.ENV.SUPABASE_URL) || '';
+            const SUPABASE_ANON_KEY = (window.ENV && window.ENV.SUPABASE_ANON_KEY) || '';
+            const isMockMode = !SUPABASE_URL || SUPABASE_URL.includes('tu-proyecto') || !SUPABASE_ANON_KEY || SUPABASE_ANON_KEY.includes('tu-anon-key');
+
+            let supabase = null;
+            let loadedLeads = [];
+            let chartTraffic = null;
+            let chartActions = null;
+
+            if (!isMockMode) {
+                try {
+                    supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+                } catch (e) {
+                    console.error("Falla al instanciar Supabase client:", e);
+                }
+            }
+
+            // 2. COMPROBACIÓN DE SESIÓN DE SUPABASE AUTH
+            if (isMockMode) {
+                mockWarning.classList.remove('hidden');
+                loginContainer.classList.add('hidden');
+                dashboardContainer.classList.remove('hidden');
+                loadMockDashboard();
+            } else {
+                checkSession();
+            }
+
+            async function checkSession() {
+                const { data: { session } } = await supabase.auth.getSession();
+                if (session) {
+                    loginContainer.classList.add('hidden');
+                    dashboardContainer.classList.remove('hidden');
+                    loadDashboardData();
+                } else {
+                    dashboardContainer.classList.add('hidden');
+                    loginContainer.classList.remove('hidden');
+                }
+            }
+
+            // 3. EVENTO DE INICIO DE SESIÓN
+            loginForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                loginError.classList.add('hidden');
+                loginSubmitBtn.disabled = true;
+                loginSpinner.classList.remove('hidden');
+
+                const email = document.getElementById('login-email').value;
+                const password = document.getElementById('login-password').value;
+
+                try {
+                    const { error } = await supabase.auth.signInWithPassword({ email, password });
+                    if (error) throw error;
+                    
+                    loginContainer.classList.add('hidden');
+                    dashboardContainer.classList.remove('hidden');
+                    loadDashboardData();
+                } catch (err) {
+                    console.error("Error en login:", err);
+                    loginError.textContent = err.message || "Error al autenticar. Revisa los datos.";
+                    loginError.classList.remove('hidden');
+                } finally {
+                    loginSubmitBtn.disabled = false;
+                    loginSpinner.classList.add('hidden');
+                }
+            });
+
+            // 4. EVENTO DE LOGOUT
+            logoutBtn.addEventListener('click', async () => {
+                if (!isMockMode) {
+                    await supabase.auth.signOut();
+                }
+                location.reload();
+            });
+
+            // 5. CARGA DE DATOS DESDE SUPABASE
+            async function loadDashboardData() {
+                try {
+                    // Fetch Leads
+                    const { data: leads, error: leadsErr } = await supabase
+                        .from('contacts_leads')
+                        .select('*')
+                        .order('created_at', { ascending: false });
+
+                    if (leadsErr) throw leadsErr;
+                    loadedLeads = leads || [];
+
+                    // Fetch Events
+                    const { data: events, error: eventsErr } = await supabase
+                        .from('demo_events')
+                        .select('*');
+
+                    if (eventsErr) throw eventsErr;
+                    const loadedEvents = events || [];
+
+                    // Renderizar métricas e interfaz
+                    renderMetrics(loadedLeads, loadedEvents);
+                    renderLeadsTable(loadedLeads);
+                    renderCharts(loadedEvents);
+                } catch (e) {
+                    console.error("Error al cargar datos del dashboard:", e);
+                    tableBody.innerHTML = `<tr><td colspan="5" class="p-8 text-center text-rose-400">Error al cargar datos de la base de datos: ${e.message}</td></tr>`;
+                }
+            }
+
+            // 6. GESTOR DE ESTADO DEL LEAD
+            window.toggleLeadStatus = async function(leadId, currentStatus) {
+                if (isMockMode) return;
+                const newStatus = currentStatus === 'nuevo' ? 'contactado' : currentStatus === 'contactado' ? 'resuelto' : 'nuevo';
+                
+                try {
+                    const { error } = await supabase
+                        .from('contacts_leads')
+                        .update({ status: newStatus })
+                        .eq('id', leadId);
+                    
+                    if (error) throw error;
+                    loadDashboardData();
+                } catch (err) {
+                    console.error("Falla al cambiar estado del lead:", err);
+                }
+            }
+
+            // 7. RENDERIZACIÓN DE TABLA DE LEADS
+            function renderLeadsTable(leads) {
+                if (leads.length === 0) {
+                    tableBody.innerHTML = `
+                        <tr>
+                            <td colspan="5" class="p-8 text-center text-slate-500 italic">No se han registrado leads de contacto aún.</td>
+                        </tr>
+                    `;
+                    return;
+                }
+
+                tableBody.innerHTML = '';
+                leads.forEach(lead => {
+                    const date = new Date(lead.created_at);
+                    const dateStr = date.toLocaleDateString([], { day: '2-digit', month: '2-digit', year: 'numeric' }) + ' ' + 
+                                  date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+                    let statusClass = 'text-cyan-400 bg-cyan-500/10 border-cyan-500/20';
+                    let statusLabel = 'Nuevo';
+                    if (lead.status === 'contactado') {
+                        statusClass = 'text-amber-400 bg-amber-500/10 border-amber-500/20';
+                        statusLabel = 'Contactado';
+                    } else if (lead.status === 'resuelto') {
+                        statusClass = 'text-emerald-400 bg-emerald-500/10 border-emerald-500/20';
+                        statusLabel = 'Resuelto';
+                    }
+
+                    const demoNamesMap = {
+                        'rent_a_car': 'Alquiler de Autos (Rent a Car)',
+                        'gestion_turnos': 'Gestión de Turnos',
+                        'home': 'Inicio (Landing Page)'
+                    };
+                    const friendlyDemoId = demoNamesMap[lead.demo_id] || lead.demo_id || 'General';
+
+                    tableBody.innerHTML += `
+                        <tr class="border-b border-white/5 hover:bg-white/5 transition-colors">
+                            <td class="p-4">
+                                <div class="font-bold text-white">${escapeHTML(lead.name)}</div>
+                                <div class="text-xs text-slate-400 font-mono">${escapeHTML(lead.email)}</div>
+                            </td>
+                            <td class="p-4 text-slate-300 max-w-sm truncate" title="${escapeHTML(lead.message)}">${escapeHTML(lead.message)}</td>
+                            <td class="p-4 text-xs font-semibold text-purple-400 font-mono">${escapeHTML(friendlyDemoId)}</td>
+                            <td class="p-4 text-xs text-slate-400 font-mono">${dateStr}</td>
+                            <td class="p-4 text-center">
+                                <button onclick="toggleLeadStatus('${lead.id}', '${lead.status}')" class="inline-block px-2.5 py-1 rounded-lg text-[10px] font-bold uppercase border cursor-pointer ${statusClass}">
+                                    ${statusLabel}
+                                </button>
+                            </td>
+                        </tr>
+                    `;
+                });
+            }
+
+            // 8. RENDERIZACIÓN DE METRICAS
+            function renderMetrics(leads, events) {
+                document.getElementById('metric-leads').textContent = leads.length;
+                document.getElementById('metric-events').textContent = events.length;
+
+                const oneDayAgo = new Date(Date.now() - 24 * 60 * 60 * 1000);
+                const leadsToday = leads.filter(l => new Date(l.created_at) >= oneDayAgo).length;
+                document.getElementById('metric-leads-today').textContent = leadsToday;
+            }
+
+            // 9. RENDERIZACIÓN DE GRÁFICOS (CHART.JS)
+            function renderCharts(events) {
+                // Procesar tráfico por demo
+                const demoCounts = {};
+                // Procesar tipos de eventos
+                const actionCounts = {};
+
+                const demoNameTranslations = {
+                    'home': 'Página Inicio',
+                    'rent_a_car': 'Rent a Car',
+                    'gestion_turnos': 'Gestión de Turnos',
+                    'demos_page': 'Página Demos',
+                    'demo_selector': 'Pestañas Demo',
+                    'demo_kanban': 'Demo Kanban',
+                    'demo_booking': 'Demo Reserva',
+                    'contact_form': 'Formulario Contacto'
+                };
+
+                const actionTypeTranslations = {
+                    'view': 'Visitas',
+                    'click_cta_sistemas': 'Clic CTA Sistemas',
+                    'click_cta_cotizar': 'Clic CTA Cotizar',
+                    'click_solicitar_demo': 'Clic Solicitud Demo',
+                    'submit_success': 'Envío Exitoso Form',
+                    'submit_failed': 'Envío Fallido Form',
+                    'tab_change': 'Cambio de Demo',
+                    'order_placed': 'Pedido Creado',
+                    'order_status_changed': 'Cambio Estado Kanban',
+                    'booking_confirmed': 'Reserva Confirmada',
+                    'booking_failed': 'Reserva Fallida',
+                    'map_clicked': 'Clic en Mapa'
+                };
+
+                events.forEach(ev => {
+                    const translatedDemoName = demoNameTranslations[ev.demo_name] || ev.demo_name;
+                    const translatedActionType = actionTypeTranslations[ev.event_type] || ev.event_type;
+
+                    demoCounts[translatedDemoName] = (demoCounts[translatedDemoName] || 0) + 1;
+                    actionCounts[translatedActionType] = (actionCounts[translatedActionType] || 0) + 1;
+                });
+
+                const demoLabels = Object.keys(demoCounts);
+                const demoData = Object.values(demoCounts);
+
+                const actionLabels = Object.keys(actionCounts);
+                const actionData = Object.values(actionCounts);
+
+                // Destruir gráficos previos si existen
+                if (chartTraffic) chartTraffic.destroy();
+                if (chartActions) chartActions.destroy();
+
+                // Chart 1: Tráfico
+                const ctxTraffic = document.getElementById('traffic-chart').getContext('2d');
+                chartTraffic = new Chart(ctxTraffic, {
+                    type: 'bar',
+                    data: {
+                        labels: demoLabels.length ? demoLabels : ['Sin datos'],
+                        datasets: [{
+                            label: 'Interacciones',
+                            data: demoData.length ? demoData : [0],
+                            backgroundColor: 'rgba(6, 182, 212, 0.45)',
+                            borderColor: '#06b6d4',
+                            borderWidth: 2,
+                            borderRadius: 8
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { display: false }
+                        },
+                        scales: {
+                            x: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8' } },
+                            y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8', stepSize: 1 } }
+                        }
+                    }
+                });
+
+                // Chart 2: Acciones
+                const ctxActions = document.getElementById('actions-chart').getContext('2d');
+                chartActions = new Chart(ctxActions, {
+                    type: 'doughnut',
+                    data: {
+                        labels: actionLabels.length ? actionLabels : ['Sin datos'],
+                        datasets: [{
+                            data: actionData.length ? actionData : [1],
+                            backgroundColor: [
+                                'rgba(6, 182, 212, 0.6)',
+                                'rgba(139, 92, 246, 0.6)',
+                                'rgba(16, 185, 129, 0.6)',
+                                'rgba(244, 63, 94, 0.6)',
+                                'rgba(245, 158, 11, 0.6)'
+                            ],
+                            borderColor: 'rgba(15, 23, 42, 0.8)',
+                            borderWidth: 2
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'bottom',
+                                labels: { color: '#94a3b8', boxWidth: 12, font: { size: 10 } }
+                            }
+                        }
+                    }
+                });
+            }
+
+            // 10. EXPORTACIÓN A CSV
+            exportCsvBtn.addEventListener('click', () => {
+                if (loadedLeads.length === 0) return;
+                
+                let csvContent = "data:text/csv;charset=utf-8,";
+                csvContent += "ID,Fecha,Nombre,Email,Mensaje,Demo/Interes,Estado\r\n";
+                
+                loadedLeads.forEach(lead => {
+                    const row = [
+                        lead.id,
+                        lead.created_at,
+                        `"${lead.name.replace(/"/g, '""')}"`,
+                        lead.email,
+                        `"${lead.message.replace(/"/g, '""')}"`,
+                        lead.demo_id || 'General',
+                        lead.status
+                    ];
+                    csvContent += row.join(",") + "\r\n";
+                });
+                
+                const encodedUri = encodeURI(csvContent);
+                const link = document.createElement("a");
+                link.setAttribute("href", encodedUri);
+                link.setAttribute("download", `leads_contacto_${Date.now()}.csv`);
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            });
+
+            // 11. CARGA DE MOCK DASHBOARD (SI NO HAY SUPABASE)
+            function loadMockDashboard() {
+                loadedLeads = [
+                    { id: '1', created_at: new Date().toISOString(), name: 'Carlos Gomez', email: 'carlos@gomez.com', message: 'Hola, me interesa agendar una asesoría para automatizar mi taller mecánico.', demo_id: 'rent_a_car', status: 'nuevo' },
+                    { id: '2', created_at: new Date(Date.now() - 3600000).toISOString(), name: 'Sofía Díaz', email: 'sofia@turnos.com', message: 'Quiero ver el demo de turnos integrados con mi bot de WhatsApp.', demo_id: 'gestion_turnos', status: 'contactado' },
+                    { id: '3', created_at: new Date(Date.now() - 86400000).toISOString(), name: 'Fernando Alvarez', email: 'fernando@alvarez.com', message: '¡Excelente portfolio! Hablemos por presupuesto general.', demo_id: null, status: 'resuelto' }
+                ];
+
+                const mockEvents = [
+                    { demo_name: 'home', event_type: 'view' },
+                    { demo_name: 'home', event_type: 'click_cta_sistemas' },
+                    { demo_name: 'rent_a_car', event_type: 'click_solicitar_demo' },
+                    { demo_name: 'demos_page', event_type: 'view' },
+                    { demo_name: 'demo_selector', event_type: 'tab_change' },
+                    { demo_name: 'demo_kanban', event_type: 'order_placed' },
+                    { demo_name: 'demo_kanban', event_type: 'order_status_changed' },
+                    { demo_name: 'demo_booking', event_type: 'booking_confirmed' }
+                ];
+
+                renderMetrics(loadedLeads, mockEvents);
+                renderLeadsTable(loadedLeads);
+                renderCharts(mockEvents);
+            }
+
+            // Escapar cadenas para evitar XSS
+            function escapeHTML(str) {
+                return str.replace(/[&<>'"]/g, 
+                    tag => ({
+                        '&': '&amp;',
+                        '<': '&lt;',
+                        '>': '&gt;',
+                        "'": '&#39;',
+                        '"': '&quot;'
+                    }[tag] || tag)
+                );
+            }
+        });
+    </script>
+</body>
+</html>
