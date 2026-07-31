@@ -1,7 +1,8 @@
 // Configuración de Integraciones del Proyecto
 window.ENV = {
     // URL del webhook de n8n para el formulario de contacto principal en index.html
-    N8N_WEBHOOK_URL: 'https://n8n.tu-servidor.com/webhook/contacto-landing',
+    // Nota: Cambia "/webhook/" por "/webhook-test/" si necesitas hacer pruebas con el editor de n8n abierto.
+    N8N_WEBHOOK_URL: 'https://n8n.emmevp.com/webhook/contacto-landing',
 
     // URL del webhook de n8n para la demo interactiva de pedidos en demos.html
     DEMOS_N8N_WEBHOOK_URL: 'https://n8n.tu-servidor.com/webhook/pedidos-demo',
