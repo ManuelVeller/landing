@@ -835,7 +835,7 @@
                         metadata: metadata
                     }]);
                 } catch (err) {
-                    console.error("Falla al registrar evento de analítica:", err);
+                    console.error("Falla al registrar evento de analítica:", err.message || err, err.details || "", err.hint || "");
                 }
             }
 
@@ -1136,7 +1136,7 @@
                         renderKanban();
                         startAllTimers();
                     } catch (e) {
-                        console.error("Error al cargar datos de Supabase:", e);
+                        console.error("Error al cargar datos de Supabase:", e.message || e, e.details || "", e.hint || "");
                         showToast("Error de Sincronización", "No se pudieron obtener los pedidos de la base de datos.", "warning");
                     }
                 }
@@ -1310,7 +1310,7 @@
                         renderKanban();
                         triggerAlertsAndTimers();
                     } catch (e) {
-                        console.error("Error al actualizar estado en Supabase:", e);
+                        console.error("Error al actualizar estado en Supabase:", e.message || e, e.details || "", e.hint || "");
                         // Revertir en memoria
                         order.estado = oldStatus;
                         renderKanban();
@@ -1481,7 +1481,7 @@
                         });
                         handleSuccess();
                     } catch (err) {
-                        console.error("Error al registrar pedido en Supabase:", err);
+                        console.error("Error al registrar pedido en Supabase:", err.message || err, err.details || "", err.hint || "");
                         orderFeedback.textContent = 'Error al registrar tu pedido en la base de datos de Supabase. Revisa la consola para más detalles.';
                         orderFeedback.className = 'p-4 rounded-xl text-center text-sm font-semibold bg-brand-rose/10 text-brand-rose';
                         orderFeedback.classList.remove('hidden');
@@ -1623,7 +1623,7 @@
                         }
                         renderBookings();
                     } catch (e) {
-                        console.error("Error al cargar reservas de Supabase:", e);
+                        console.error("Error al cargar reservas de Supabase:", e.message || e, e.details || "", e.hint || "");
                         // Fallback a localStorage en caso de error de conexión
                         const localData = localStorage.getItem('demo_bookings');
                         const allLocalBookings = localData ? JSON.parse(localData) : [];
@@ -1900,7 +1900,7 @@
                         }
                         dbSuccess = true;
                     } catch (e) {
-                        console.error("Error al insertar reserva en Supabase:", e);
+                        console.error("Error al insertar reserva en Supabase:", e.message || e, e.details || "", e.hint || "");
                         // Fallback local
                         finalBooking = { id: 'bk_' + Date.now(), ...bookingRecord };
                         const localData = localStorage.getItem('demo_bookings');
