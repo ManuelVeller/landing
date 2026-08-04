@@ -5,10 +5,10 @@ window.ENV = {
     N8N_WEBHOOK_URL: 'https://n8n.emmevp.com/webhook/contacto-landing',
 
     // URL del webhook de n8n para la demo interactiva de pedidos en demos.html
-    DEMOS_N8N_WEBHOOK_URL: 'https://n8n.tu-servidor.com/webhook/pedidos-demo',
+    DEMOS_N8N_WEBHOOK_URL: 'https://n8n.emmevp.com/webhook/pedidos-demo',
 
     // URL del webhook de n8n para la demo interactiva de reservas (Google Maps + Calendar) en demos.html
-    DEMOS_BOOKING_N8N_WEBHOOK_URL: 'https://n8n.tu-servidor.com/webhook/reserva-demo',
+    DEMOS_BOOKING_N8N_WEBHOOK_URL: 'https://n8n.emmevp.com/webhook/reserva-demo',
 
     // Credenciales de conexión para Supabase (Reemplazar con tus credenciales)
     SUPABASE_URL: 'https://tfiyzdathkelbovfukvo.supabase.co',
