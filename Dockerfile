@@ -8,6 +8,8 @@ COPY dashboard.html /usr/share/nginx/html/dashboard.html
 COPY config.js /usr/share/nginx/html/config.js
 COPY assets/ /usr/share/nginx/html/assets/
 
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
 # Expose port 80 to receive web traffic
 EXPOSE 80
 
