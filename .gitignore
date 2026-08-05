@@ -1,0 +1,12 @@
+# Environment variables
+.env
+
+# Generated config file
+config.js
+
+# Node modules / temp files
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.DS_Store
