@@ -5,6 +5,7 @@ FROM nginx:alpine
 COPY index.html /usr/share/nginx/html/index.html
 COPY demos.html /usr/share/nginx/html/demos.html
 COPY dashboard.html /usr/share/nginx/html/dashboard.html
+COPY demo-rental.html /usr/share/nginx/html/demo-rental.html
 COPY config.template.js /usr/share/nginx/html/config.template.js
 COPY assets/ /usr/share/nginx/html/assets/
 

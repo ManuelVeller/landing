@@ -1,0 +1,1605 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo Sandbox: Control de Flota y Finanzas | emmevp soluciones</title>
+    
+    <!-- Google Fonts: Inter & Outfit -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- CDNs de React y ReactDOM (Producción) -->
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+    
+    <!-- Recharts (Graficos en React) -->
+    <script src="https://unpkg.com/prop-types@15.8.1/prop-types.min.js"></script>
+    <script src="https://unpkg.com/recharts@2.12.7/umd/Recharts.js"></script>
+    
+    <!-- XLSX (SheetJS) para descarga a Excel -->
+    <script src="https://unpkg.com/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+
+    <!-- Lucide Icons Vanilla CDN -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+
+    <style type="text/css">
+        :root {
+            --color-bg-dark: #0f172a;
+            --color-bg-card: #1e293b;
+            --color-brand-cyan: #06b6d4;
+            --color-brand-violet: #8b5cf6;
+            --color-brand-emerald: #10b981;
+            
+            --font-sans: 'Inter', sans-serif;
+            --font-display: 'Outfit', sans-serif;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background-color: #020617;
+            color: #f8fafc;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: var(--font-display);
+        }
+
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="root">
+        <div class="min-h-screen bg-slate-950 flex flex-col items-center justify-center font-sans">
+            <div class="space-y-4 text-center">
+                <div class="w-10 h-10 border-4 border-cyan-500 border-t-transparent rounded-full animate-spin mx-auto"></div>
+                <p class="text-slate-400 font-bold text-sm">Cargando Sandbox Rent a Car...</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
+function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
+function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
+function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+var _React = React,
+  useState = _React.useState,
+  useEffect = _React.useEffect,
+  useRef = _React.useRef;
+var _Recharts = Recharts,
+  AreaChart = _Recharts.AreaChart,
+  Area = _Recharts.Area,
+  XAxis = _Recharts.XAxis,
+  YAxis = _Recharts.YAxis,
+  Tooltip = _Recharts.Tooltip,
+  ResponsiveContainer = _Recharts.ResponsiveContainer,
+  Legend = _Recharts.Legend,
+  CartesianGrid = _Recharts.CartesianGrid,
+  LineChart = _Recharts.LineChart,
+  Line = _Recharts.Line,
+  BarChart = _Recharts.BarChart,
+  Bar = _Recharts.Bar;
+
+// Componente de Icono Lucide dinámico
+var Icon = function Icon(_ref) {
+  var name = _ref.name,
+    className = _ref.className,
+    size = _ref.size,
+    _ref$strokeWidth = _ref.strokeWidth,
+    strokeWidth = _ref$strokeWidth === void 0 ? 2 : _ref$strokeWidth;
+  useEffect(function () {
+    if (window.lucide) {
+      window.lucide.createIcons();
+    }
+  });
+  return /*#__PURE__*/React.createElement("i", _objectSpread({
+    "data-lucide": name,
+    className: className
+  }, size ? {
+    style: {
+      width: size + 'px',
+      height: size + 'px',
+      strokeWidth: strokeWidth
+    }
+  } : {}));
+};
+var DAILY_RATE = 20000;
+var getTodayStr = function getTodayStr() {
+  var date = new Date();
+  var offset = date.getTimezoneOffset() * 60000;
+  return new Date(date.getTime() - offset).toISOString().split('T')[0];
+};
+var getFutureDateStr = function getFutureDateStr(days) {
+  var date = new Date();
+  date.setDate(date.getDate() + days);
+  var offset = date.getTimezoneOffset() * 60000;
+  return new Date(date.getTime() - offset).toISOString().split('T')[0];
+};
+
+// --- VEHÍCULOS INICIALES ---
+var INITIAL_VEHICLES = [{
+  id: 1,
+  patente: 'AF 106 OJ',
+  marca_modelo: 'Chevrolet Onix',
+  km_actual: 45200,
+  tipo_aceite: '5W-30 Sintético',
+  estado: 'Operativo'
+}, {
+  id: 2,
+  patente: 'AE 842 MX',
+  marca_modelo: 'Fiat Cronos',
+  km_actual: 28400,
+  tipo_aceite: '0W-20 Sintético',
+  estado: 'Operativo'
+}, {
+  id: 3,
+  patente: 'AD 913 QW',
+  marca_modelo: 'Toyota Etios',
+  km_actual: 62100,
+  tipo_aceite: '5W-30 Sintético',
+  estado: 'Operativo'
+}];
+
+// --- 3 SPRINTS HISTÓRICOS PRECARGADOS ---
+var INITIAL_SPRINTS = [{
+  id: 'sprint_hist_1',
+  nombre: 'Quincena Julio - Fiat Cronos',
+  cliente_nombre: 'Carlos Martínez',
+  cliente_email: 'carlos.m@gmail.com',
+  vehiculo_id: 2,
+  vehiculo_modelo: 'Fiat Cronos',
+  vehiculo_patente: 'AE 842 MX',
+  fecha_inicio: '2026-07-01',
+  fecha_fin_estimada: '2026-07-15',
+  monto_total: 280000,
+  dias: 14,
+  estado: 'cerrado'
+}, {
+  id: 'sprint_hist_2',
+  nombre: 'Semana Turismo - Toyota Etios',
+  cliente_nombre: 'Mariana López',
+  cliente_email: 'mariana.lopez@outlook.com',
+  vehiculo_id: 3,
+  vehiculo_modelo: 'Toyota Etios',
+  vehiculo_patente: 'AD 913 QW',
+  fecha_inicio: '2026-07-16',
+  fecha_fin_estimada: '2026-07-23',
+  monto_total: 140000,
+  dias: 7,
+  estado: 'cerrado'
+}, {
+  id: 'sprint_hist_3',
+  nombre: 'Finde Largo - Chevrolet Onix',
+  cliente_nombre: 'Roberto Fernández',
+  cliente_email: 'r.fernandez@empresa.com',
+  vehiculo_id: 1,
+  vehiculo_modelo: 'Chevrolet Onix',
+  vehiculo_patente: 'AF 106 OJ',
+  fecha_inicio: '2026-07-25',
+  fecha_fin_estimada: '2026-07-28',
+  monto_total: 60000,
+  dias: 3,
+  estado: 'cerrado'
+}];
+
+// --- TRANSACCIONES HISTÓRICAS PRECARGADAS ---
+var INITIAL_TRANSACTIONS = [{
+  id: 'tx_hist_1',
+  sprint_id: 'sprint_hist_1',
+  tipo: 'ingreso',
+  categoria: 'Alquiler Vehicular',
+  descripcion: 'Cobro Alquiler Quincenal (14 días) - Carlos Martínez',
+  monto: 280000,
+  fecha: '2026-07-01',
+  metodo_pago: 'Transferencia'
+}, {
+  id: 'tx_hist_2',
+  sprint_id: 'sprint_hist_1',
+  tipo: 'egreso',
+  categoria: 'Combustible',
+  descripcion: 'Combustible Nafta Premium YPF',
+  monto: 35000,
+  fecha: '2026-07-05',
+  metodo_pago: 'Efectivo'
+}, {
+  id: 'tx_hist_3',
+  sprint_id: 'sprint_hist_1',
+  tipo: 'egreso',
+  categoria: 'Lavado',
+  descripcion: 'Lavado Completo y Desinfección',
+  monto: 12000,
+  fecha: '2026-07-15',
+  metodo_pago: 'Efectivo'
+}, {
+  id: 'tx_hist_4',
+  sprint_id: 'sprint_hist_1',
+  tipo: 'ingreso',
+  categoria: 'Cobro Adicional',
+  descripcion: 'Cobro Exceso KM Adicionales',
+  monto: 15000,
+  fecha: '2026-07-15',
+  metodo_pago: 'Tarjeta'
+}, {
+  id: 'tx_hist_5',
+  sprint_id: 'sprint_hist_2',
+  tipo: 'ingreso',
+  categoria: 'Alquiler Vehicular',
+  descripcion: 'Cobro Alquiler Semana (7 días) - Mariana López',
+  monto: 140000,
+  fecha: '2026-07-16',
+  metodo_pago: 'Tarjeta'
+}, {
+  id: 'tx_hist_6',
+  sprint_id: 'sprint_hist_2',
+  tipo: 'egreso',
+  categoria: 'Combustible',
+  descripcion: 'Combustible Shell V-Power',
+  monto: 22000,
+  fecha: '2026-07-18',
+  metodo_pago: 'Tarjeta'
+}, {
+  id: 'tx_hist_7',
+  sprint_id: 'sprint_hist_2',
+  tipo: 'egreso',
+  categoria: 'Mantenimiento / Taller',
+  descripcion: 'Service Filtro y Aceite 5W-30 Etios',
+  monto: 45000,
+  fecha: '2026-07-23',
+  metodo_pago: 'Transferencia'
+}, {
+  id: 'tx_hist_8',
+  sprint_id: 'sprint_hist_3',
+  tipo: 'ingreso',
+  categoria: 'Alquiler Vehicular',
+  descripcion: 'Cobro Alquiler Finde Largo (3 días) - Roberto Fernández',
+  monto: 60000,
+  fecha: '2026-07-25',
+  metodo_pago: 'Transferencia'
+}, {
+  id: 'tx_hist_9',
+  sprint_id: 'sprint_hist_3',
+  tipo: 'egreso',
+  categoria: 'Combustible',
+  descripcion: 'Carga Nafta Axion Super',
+  monto: 18000,
+  fecha: '2026-07-27',
+  metodo_pago: 'Efectivo'
+}];
+
+// --- HISTORIAL DE CAMBIOS DE ESTADO Y KILOMETRAJE PRECARGADO ---
+var INITIAL_STATUS_HISTORY = [{
+  id: 'hist_1',
+  fecha: '2026-07-01',
+  vehiculo_modelo: 'Fiat Cronos',
+  patente: 'AE 842 MX',
+  evento: 'Inicio Alquiler Quincena',
+  estado_previo: 'Operativo',
+  nuevo_estado: 'Alquilado',
+  km_anterior: 26200,
+  km_nuevo: 26200,
+  diff_km: 0
+}, {
+  id: 'hist_2',
+  fecha: '2026-07-15',
+  vehiculo_modelo: 'Fiat Cronos',
+  patente: 'AE 842 MX',
+  evento: 'Devolución de Alquiler',
+  estado_previo: 'Alquilado',
+  nuevo_estado: 'Operativo',
+  km_anterior: 26200,
+  km_nuevo: 28400,
+  diff_km: 2200
+}, {
+  id: 'hist_3',
+  fecha: '2026-07-16',
+  vehiculo_modelo: 'Toyota Etios',
+  patente: 'AD 913 QW',
+  evento: 'Inicio Alquiler Semana',
+  estado_previo: 'Operativo',
+  nuevo_estado: 'Alquilado',
+  km_anterior: 60800,
+  km_nuevo: 60800,
+  diff_km: 0
+}, {
+  id: 'hist_4',
+  fecha: '2026-07-23',
+  vehiculo_modelo: 'Toyota Etios',
+  patente: 'AD 913 QW',
+  evento: 'Devolución de Alquiler',
+  estado_previo: 'Alquilado',
+  nuevo_estado: 'Operativo',
+  km_anterior: 60800,
+  km_nuevo: 62100,
+  diff_km: 1300
+}, {
+  id: 'hist_5',
+  fecha: '2026-07-25',
+  vehiculo_modelo: 'Chevrolet Onix',
+  patente: 'AF 106 OJ',
+  evento: 'Devolución Alquiler Finde',
+  estado_previo: 'Alquilado',
+  nuevo_estado: 'Operativo',
+  km_anterior: 44600,
+  km_nuevo: 45200,
+  diff_km: 600
+}];
+
+// --- COMPONENTE PRINCIPAL ---
+function SandboxApp() {
+  var _useState = useState(INITIAL_VEHICLES),
+    _useState2 = _slicedToArray(_useState, 2),
+    vehicles = _useState2[0],
+    setVehicles = _useState2[1];
+  var _useState3 = useState(INITIAL_SPRINTS),
+    _useState4 = _slicedToArray(_useState3, 2),
+    sprints = _useState4[0],
+    setSprints = _useState4[1];
+  var _useState5 = useState(INITIAL_TRANSACTIONS),
+    _useState6 = _slicedToArray(_useState5, 2),
+    transactions = _useState6[0],
+    setTransactions = _useState6[1];
+  var _useState7 = useState([]),
+    _useState8 = _slicedToArray(_useState7, 2),
+    maintenanceRecords = _useState8[0],
+    setMaintenanceRecords = _useState8[1];
+  var _useState9 = useState(INITIAL_STATUS_HISTORY),
+    _useState0 = _slicedToArray(_useState9, 2),
+    statusHistory = _useState0[0],
+    setStatusHistory = _useState0[1];
+
+  // Estado de vista actual: 'reserva' | 'menu' | 'finanzas' | 'flota' | 'admin'
+  var _useState1 = useState('reserva'),
+    _useState10 = _slicedToArray(_useState1, 2),
+    currentView = _useState10[0],
+    setCurrentView = _useState10[1];
+  var _useState11 = useState(null),
+    _useState12 = _slicedToArray(_useState11, 2),
+    activeSprint = _useState12[0],
+    setActiveSprint = _useState12[1];
+  var _useState13 = useState(''),
+    _useState14 = _slicedToArray(_useState13, 2),
+    toastMessage = _useState14[0],
+    setToastMessage = _useState14[1];
+
+  // --- ESTADO DEL FORMULARIO DE RESERVA COMPACTO ---
+  var _useState15 = useState({
+      nombre: '',
+      apellido: '',
+      email: '',
+      vehiculoId: INITIAL_VEHICLES[0].id,
+      fechaInicio: getTodayStr(),
+      fechaFin: getFutureDateStr(3)
+    }),
+    _useState16 = _slicedToArray(_useState15, 2),
+    bookingData = _useState16[0],
+    setBookingData = _useState16[1];
+
+  // Cálculo automático dinámico: 1 día = $20.000
+  var calculateDaysAndTotal = function calculateDaysAndTotal() {
+    if (!bookingData.fechaInicio || !bookingData.fechaFin) return {
+      days: 1,
+      total: DAILY_RATE
+    };
+    var start = new Date(bookingData.fechaInicio);
+    var end = new Date(bookingData.fechaFin);
+    var diffTime = end.getTime() - start.getTime();
+    var diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    var days = diffDays > 0 ? diffDays : 1;
+    return {
+      days: days,
+      total: days * DAILY_RATE
+    };
+  };
+  var _calculateDaysAndTota = calculateDaysAndTotal(),
+    calculatedDays = _calculateDaysAndTota.days,
+    calculatedTotal = _calculateDaysAndTota.total;
+  var showToast = function showToast(msg) {
+    setToastMessage(msg);
+    setTimeout(function () {
+      return setToastMessage('');
+    }, 4000);
+  };
+
+  // --- PROCESAR LA RESERVA (PASO 1 -> PASO 2) ---
+  var handleConfirmBooking = function handleConfirmBooking(e) {
+    e.preventDefault();
+    if (!bookingData.nombre || !bookingData.apellido || !bookingData.email) {
+      alert('Por favor completá Nombre, Apellido y Mail.');
+      return;
+    }
+    var selectedVehicle = vehicles.find(function (v) {
+      return v.id === parseInt(bookingData.vehiculoId);
+    }) || vehicles[0];
+
+    // Crear Nuevo Sprint Activo
+    var newSprint = {
+      id: 'sprint_' + Date.now(),
+      nombre: "Alquiler ".concat(selectedVehicle.marca_modelo, " - ").concat(bookingData.nombre, " ").concat(bookingData.apellido),
+      cliente_nombre: "".concat(bookingData.nombre, " ").concat(bookingData.apellido),
+      cliente_email: bookingData.email,
+      vehiculo_id: selectedVehicle.id,
+      vehiculo_modelo: selectedVehicle.marca_modelo,
+      vehiculo_patente: selectedVehicle.patente,
+      fecha_inicio: bookingData.fechaInicio,
+      fecha_fin_estimada: bookingData.fechaFin,
+      monto_total: calculatedTotal,
+      dias: calculatedDays,
+      estado: 'activo'
+    };
+
+    // Crear Transacción Inicial de Ingreso
+    var initialTx = {
+      id: 'tx_' + Date.now(),
+      sprint_id: newSprint.id,
+      tipo: 'ingreso',
+      categoria: 'Alquiler Vehicular',
+      descripcion: "Cobro Alquiler (".concat(calculatedDays, " d\xEDas) - ").concat(bookingData.nombre, " ").concat(bookingData.apellido),
+      monto: calculatedTotal,
+      fecha: bookingData.fechaInicio,
+      metodo_pago: 'Transferencia'
+    };
+
+    // Registrar Evento en Historial de Flota
+    var newHistoryLog = {
+      id: 'hist_' + Date.now(),
+      fecha: bookingData.fechaInicio,
+      vehiculo_modelo: selectedVehicle.marca_modelo,
+      patente: selectedVehicle.patente,
+      evento: "Nueva Reserva: ".concat(bookingData.nombre, " ").concat(bookingData.apellido),
+      estado_previo: selectedVehicle.estado,
+      nuevo_estado: 'Alquilado',
+      km_anterior: selectedVehicle.km_actual,
+      km_nuevo: selectedVehicle.km_actual,
+      diff_km: 0
+    };
+
+    // Actualizar estado del vehículo a 'Alquilado'
+    var updatedVehicles = vehicles.map(function (v) {
+      return v.id === selectedVehicle.id ? _objectSpread(_objectSpread({}, v), {}, {
+        estado: 'Alquilado'
+      }) : v;
+    });
+    setVehicles(updatedVehicles);
+    setSprints([newSprint].concat(_toConsumableArray(sprints)));
+    setActiveSprint(newSprint);
+    setTransactions([initialTx].concat(_toConsumableArray(transactions)));
+    setStatusHistory([newHistoryLog].concat(_toConsumableArray(statusHistory)));
+    showToast("\xA1Reserva registrada! Sprint iniciado por $".concat(calculatedTotal.toLocaleString('es-AR'), "."));
+    setCurrentView('menu');
+  };
+
+  // AGREGAR NUEVA TRANSACCIÓN (FINANZAS)
+  var handleAddTransaction = function handleAddTransaction(newTxData) {
+    var _sprints$;
+    var newTx = _objectSpread({
+      id: 'tx_' + Date.now(),
+      sprint_id: activeSprint ? activeSprint.id : ((_sprints$ = sprints[0]) === null || _sprints$ === void 0 ? void 0 : _sprints$.id) || null
+    }, newTxData);
+    setTransactions(function (prev) {
+      return [newTx].concat(_toConsumableArray(prev));
+    });
+    showToast("".concat(newTx.tipo === 'ingreso' ? '🟢 Ingreso' : '🔴 Egreso', " cargado: $").concat(Number(newTx.monto).toLocaleString('es-AR')));
+  };
+
+  // CAMBIAR ESTADO DE VEHÍCULO
+  var handleUpdateVehicleStatus = function handleUpdateVehicleStatus(vehicleId, newStatus) {
+    var v = vehicles.find(function (item) {
+      return item.id === vehicleId;
+    });
+    if (v) {
+      var historyLog = {
+        id: 'hist_' + Date.now(),
+        fecha: getTodayStr(),
+        vehiculo_modelo: v.marca_modelo,
+        patente: v.patente,
+        evento: 'Cambio de Estado Manual',
+        estado_previo: v.estado,
+        nuevo_estado: newStatus,
+        km_anterior: v.km_actual,
+        km_nuevo: v.km_actual,
+        diff_km: 0
+      };
+      setStatusHistory(function (prev) {
+        return [historyLog].concat(_toConsumableArray(prev));
+      });
+    }
+    setVehicles(function (prev) {
+      return prev.map(function (item) {
+        return item.id === vehicleId ? _objectSpread(_objectSpread({}, item), {}, {
+          estado: newStatus
+        }) : item;
+      });
+    });
+    showToast('Estado de vehículo actualizado.');
+  };
+
+  // ACTUALIZAR KM VEHÍCULO
+  var handleUpdateVehicleKm = function handleUpdateVehicleKm(vehicleId, newKm) {
+    var targetKm = parseInt(newKm);
+    var v = vehicles.find(function (item) {
+      return item.id === vehicleId;
+    });
+    if (v && targetKm !== v.km_actual) {
+      var diff = targetKm - v.km_actual;
+      var historyLog = {
+        id: 'hist_' + Date.now(),
+        fecha: getTodayStr(),
+        vehiculo_modelo: v.marca_modelo,
+        patente: v.patente,
+        evento: 'Actualización de Odómetro',
+        estado_previo: v.estado,
+        nuevo_estado: v.estado,
+        km_anterior: v.km_actual,
+        km_nuevo: targetKm,
+        diff_km: diff
+      };
+      setStatusHistory(function (prev) {
+        return [historyLog].concat(_toConsumableArray(prev));
+      });
+    }
+    setVehicles(function (prev) {
+      return prev.map(function (item) {
+        return item.id === vehicleId ? _objectSpread(_objectSpread({}, item), {}, {
+          km_actual: targetKm
+        }) : item;
+      });
+    });
+    showToast('Kilometraje actualizado correctamente.');
+  };
+
+  // REGISTRAR MANTENIMIENTO
+  var handleAddMaintenance = function handleAddMaintenance(record) {
+    var newRec = _objectSpread({
+      id: 'maint_' + Date.now()
+    }, record);
+    setMaintenanceRecords(function (prev) {
+      return [newRec].concat(_toConsumableArray(prev));
+    });
+    handleAddTransaction({
+      tipo: 'egreso',
+      categoria: 'Mantenimiento / Taller',
+      descripcion: "Service ".concat(record.vehiculo_modelo, " - ").concat(record.descripcion),
+      monto: record.costo,
+      fecha: record.fecha,
+      metodo_pago: 'Transferencia'
+    });
+    showToast('Service de mantenimiento asentado.');
+  };
+
+  // EXPORTAR REPORTE A EXCEL
+  var handleExportExcel = function handleExportExcel() {
+    if (!window.XLSX) {
+      alert('Librería XLSX cargando...');
+      return;
+    }
+    var wb = XLSX.utils.book_new();
+    var txData = transactions.map(function (t) {
+      return {
+        ID: t.id,
+        SprintID: t.sprint_id || 'N/A',
+        Fecha: t.fecha,
+        Tipo: t.tipo.toUpperCase(),
+        Categoría: t.categoria,
+        Descripción: t.descripcion,
+        Monto: t.monto,
+        'Método Pago': t.metodo_pago
+      };
+    });
+    var wsTx = XLSX.utils.json_to_sheet(txData);
+    XLSX.utils.book_append_sheet(wb, wsTx, "Transacciones");
+    var vehData = vehicles.map(function (v) {
+      return {
+        ID: v.id,
+        Patente: v.patente,
+        Modelo: v.marca_modelo,
+        'KM Actual': v.km_actual,
+        Estado: v.estado
+      };
+    });
+    var wsVeh = XLSX.utils.json_to_sheet(vehData);
+    XLSX.utils.book_append_sheet(wb, wsVeh, "Vehículos");
+    var histData = statusHistory.map(function (h) {
+      return {
+        ID: h.id,
+        Fecha: h.fecha,
+        Modelo: h.vehiculo_modelo,
+        Patente: h.patente,
+        Evento: h.evento,
+        'Estado Anterior': h.estado_previo,
+        'Nuevo Estado': h.nuevo_estado,
+        'KM Anterior': h.km_anterior,
+        'KM Nuevo': h.km_nuevo,
+        'Diferencia KM': h.diff_km
+      };
+    });
+    var wsHist = XLSX.utils.json_to_sheet(histData);
+    XLSX.utils.book_append_sheet(wb, wsHist, "Historial Flota");
+    XLSX.writeFile(wb, "Reporte_RentACar_Completo.xlsx");
+    showToast('📥 Reporte Excel exportado exitosamente.');
+  };
+
+  // --- VISTA 1: FORMULARIO DE RESERVA ULTRA-COMPACTO ---
+  if (currentView === 'reserva') {
+    return /*#__PURE__*/React.createElement("div", {
+      className: "min-h-screen bg-slate-950 text-slate-100 flex flex-col justify-center items-center p-3 sm:p-5 font-sans"
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "max-w-xl w-full bg-slate-900/95 border border-slate-800 rounded-2xl p-4 sm:p-6 shadow-2xl backdrop-blur-xl relative overflow-hidden"
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "absolute -top-20 -right-20 w-48 h-48 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none"
+    }), /*#__PURE__*/React.createElement("div", {
+      className: "absolute -bottom-20 -left-20 w-48 h-48 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"
+    }), /*#__PURE__*/React.createElement("div", {
+      className: "text-center mb-5"
+    }, /*#__PURE__*/React.createElement("span", {
+      className: "inline-block px-2.5 py-0.5 bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 font-bold text-[10px] uppercase tracking-wider rounded-full mb-1.5"
+    }, "Paso 1: Configurar Alquiler"), /*#__PURE__*/React.createElement("h1", {
+      className: "text-xl sm:text-2xl font-extrabold text-white tracking-tight"
+    }, "Formulario de Reserva"), /*#__PURE__*/React.createElement("p", {
+      className: "text-slate-400 text-xs mt-1"
+    }, "Carg\xE1 los datos del cliente para activar el Sandbox de Finanzas y Flota.")), /*#__PURE__*/React.createElement("form", {
+      onSubmit: handleConfirmBooking,
+      className: "space-y-3.5"
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "grid grid-cols-1 sm:grid-cols-2 gap-3"
+    }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", {
+      className: "block text-[11px] font-bold text-slate-300 uppercase tracking-wider mb-1"
+    }, "Nombre"), /*#__PURE__*/React.createElement("input", {
+      type: "text",
+      required: true,
+      placeholder: "ej. Edu",
+      value: bookingData.nombre,
+      onChange: function onChange(e) {
+        return setBookingData(_objectSpread(_objectSpread({}, bookingData), {}, {
+          nombre: e.target.value
+        }));
+      },
+      className: "w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-lg text-white placeholder-slate-600 focus:outline-none focus:border-cyan-500 text-xs transition-all"
+    })), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", {
+      className: "block text-[11px] font-bold text-slate-300 uppercase tracking-wider mb-1"
+    }, "Apellido"), /*#__PURE__*/React.createElement("input", {
+      type: "text",
+      required: true,
+      placeholder: "ej. G\xF3mez",
+      value: bookingData.apellido,
+      onChange: function onChange(e) {
+        return setBookingData(_objectSpread(_objectSpread({}, bookingData), {}, {
+          apellido: e.target.value
+        }));
+      },
+      className: "w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-white placeholder-slate-600 focus:outline-none focus:border-cyan-500 text-xs transition-all"
+    }))), /*#__PURE__*/React.createElement("div", {
+      className: "grid grid-cols-1 sm:grid-cols-2 gap-3"
+    }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", {
+      className: "block text-[11px] font-bold text-slate-300 uppercase tracking-wider mb-1"
+    }, "Mail del Cliente"), /*#__PURE__*/React.createElement("input", {
+      type: "email",
+      required: true,
+      placeholder: "cliente@ejemplo.com",
+      value: bookingData.email,
+      onChange: function onChange(e) {
+        return setBookingData(_objectSpread(_objectSpread({}, bookingData), {}, {
+          email: e.target.value
+        }));
+      },
+      className: "w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-lg text-white placeholder-slate-600 focus:outline-none focus:border-cyan-500 text-xs transition-all"
+    })), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", {
+      className: "block text-[11px] font-bold text-slate-300 uppercase tracking-wider mb-1"
+    }, "Selecci\xF3n de Auto"), /*#__PURE__*/React.createElement("select", {
+      value: bookingData.vehiculoId,
+      onChange: function onChange(e) {
+        return setBookingData(_objectSpread(_objectSpread({}, bookingData), {}, {
+          vehiculoId: e.target.value
+        }));
+      },
+      className: "w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-lg text-white focus:outline-none focus:border-cyan-500 text-xs transition-all cursor-pointer"
+    }, vehicles.map(function (v) {
+      return /*#__PURE__*/React.createElement("option", {
+        key: v.id,
+        value: v.id
+      }, "\uD83D\uDE97 ", v.marca_modelo, " (", v.patente, ")");
+    })))), /*#__PURE__*/React.createElement("div", {
+      className: "grid grid-cols-1 sm:grid-cols-2 gap-3"
+    }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", {
+      className: "block text-[11px] font-bold text-slate-300 uppercase tracking-wider mb-1"
+    }, "Fecha Inicio"), /*#__PURE__*/React.createElement("input", {
+      type: "date",
+      required: true,
+      value: bookingData.fechaInicio,
+      onChange: function onChange(e) {
+        return setBookingData(_objectSpread(_objectSpread({}, bookingData), {}, {
+          fechaInicio: e.target.value
+        }));
+      },
+      className: "w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-lg text-white focus:outline-none focus:border-cyan-500 text-xs transition-all"
+    })), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", {
+      className: "block text-[11px] font-bold text-slate-300 uppercase tracking-wider mb-1"
+    }, "Fecha Fin"), /*#__PURE__*/React.createElement("input", {
+      type: "date",
+      required: true,
+      value: bookingData.fechaFin,
+      onChange: function onChange(e) {
+        return setBookingData(_objectSpread(_objectSpread({}, bookingData), {}, {
+          fechaFin: e.target.value
+        }));
+      },
+      className: "w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-lg text-white focus:outline-none focus:border-cyan-500 text-xs transition-all"
+    }))), /*#__PURE__*/React.createElement("div", {
+      className: "bg-gradient-to-r from-emerald-950/40 to-cyan-950/40 border border-emerald-500/30 rounded-xl p-3.5 flex items-center justify-between gap-3"
+    }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+      className: "flex items-center gap-1.5 mb-0.5"
+    }, /*#__PURE__*/React.createElement("span", {
+      className: "text-[10px] text-emerald-400 font-bold uppercase tracking-wider"
+    }, "Tarifa:"), /*#__PURE__*/React.createElement("span", {
+      className: "text-[11px] font-semibold text-slate-300"
+    }, "$20.000 / d\xEDa")), /*#__PURE__*/React.createElement("p", {
+      className: "text-[11px] text-slate-400"
+    }, "Duraci\xF3n: ", /*#__PURE__*/React.createElement("strong", {
+      className: "text-white font-bold"
+    }, calculatedDays, " ", calculatedDays === 1 ? 'día' : 'días'))), /*#__PURE__*/React.createElement("div", {
+      className: "text-right"
+    }, /*#__PURE__*/React.createElement("span", {
+      className: "block text-[9px] text-slate-400 uppercase font-bold tracking-wider"
+    }, "Monto Total"), /*#__PURE__*/React.createElement("span", {
+      className: "text-xl font-black text-emerald-400 tracking-tight"
+    }, "$", calculatedTotal.toLocaleString('es-AR')))), /*#__PURE__*/React.createElement("button", {
+      type: "submit",
+      className: "w-full py-3 bg-gradient-to-r from-emerald-500 to-cyan-500 hover:from-emerald-400 hover:to-cyan-400 text-slate-950 font-black text-xs rounded-xl shadow-lg shadow-emerald-500/20 hover:shadow-emerald-500/30 transition-all flex items-center justify-center gap-2 cursor-pointer active:scale-95"
+    }, /*#__PURE__*/React.createElement("span", null, "Confirmar Reserva e Iniciar Sandbox"), /*#__PURE__*/React.createElement(Icon, {
+      name: "arrow-right",
+      className: "w-4 h-4"
+    })))));
+  }
+
+  // --- VISTAS POSTERIORES A LA RESERVA (PASO 2) ---
+  return /*#__PURE__*/React.createElement("div", {
+    className: "min-h-screen bg-slate-950 text-slate-100 font-sans flex flex-col"
+  }, /*#__PURE__*/React.createElement("header", {
+    className: "bg-slate-900/90 border-b border-slate-800 sticky top-0 z-40 backdrop-blur-md px-4 sm:px-8 py-3 flex items-center justify-between"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "flex items-center gap-3"
+  }, /*#__PURE__*/React.createElement("button", {
+    onClick: function onClick() {
+      return setCurrentView('menu');
+    },
+    className: "flex items-center gap-2 text-cyan-400 hover:text-cyan-300 font-bold text-xs bg-cyan-950/60 px-3 py-1.5 rounded-lg border border-cyan-500/30 transition-all cursor-pointer"
+  }, /*#__PURE__*/React.createElement(Icon, {
+    name: "layout-grid",
+    className: "w-4 h-4"
+  }), /*#__PURE__*/React.createElement("span", null, "Men\xFA Principal")), /*#__PURE__*/React.createElement("span", {
+    className: "text-slate-600"
+  }, "|"), /*#__PURE__*/React.createElement("span", {
+    className: "text-xs text-slate-400 font-semibold hidden sm:inline"
+  }, "Sandbox: Control de Flota y Finanzas")), /*#__PURE__*/React.createElement("div", {
+    className: "flex items-center gap-3"
+  }, /*#__PURE__*/React.createElement("button", {
+    onClick: function onClick() {
+      return setCurrentView('reserva');
+    },
+    className: "text-xs text-slate-300 hover:text-white bg-slate-800 hover:bg-slate-700 px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 cursor-pointer"
+  }, /*#__PURE__*/React.createElement(Icon, {
+    name: "plus-circle",
+    className: "w-3.5 h-3.5 text-emerald-400"
+  }), /*#__PURE__*/React.createElement("span", null, "Nueva Reserva")))), /*#__PURE__*/React.createElement("main", {
+    className: "flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6"
+  }, activeSprint && /*#__PURE__*/React.createElement("div", {
+    className: "mb-6 bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 border border-slate-800 rounded-2xl p-4 sm:p-5 shadow-lg flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "flex items-center gap-3"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400"
+  }, /*#__PURE__*/React.createElement(Icon, {
+    name: "key",
+    className: "w-5 h-5"
+  })), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    className: "flex items-center gap-2"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "w-2 h-2 rounded-full bg-emerald-400 animate-pulse"
+  }), /*#__PURE__*/React.createElement("span", {
+    className: "text-xs font-bold text-emerald-400 uppercase tracking-wider"
+  }, "Sprint Activo:"), /*#__PURE__*/React.createElement("span", {
+    className: "text-xs font-bold text-white"
+  }, activeSprint.nombre)), /*#__PURE__*/React.createElement("p", {
+    className: "text-xs text-slate-400 mt-0.5"
+  }, "Cliente: ", /*#__PURE__*/React.createElement("strong", {
+    className: "text-slate-200"
+  }, activeSprint.cliente_nombre), " (", activeSprint.cliente_email, ") | Rango: ", activeSprint.fecha_inicio, " al ", activeSprint.fecha_fin_estimada, " (", activeSprint.dias, " d\xEDas)"))), /*#__PURE__*/React.createElement("div", {
+    className: "bg-slate-950 px-4 py-2 rounded-xl border border-slate-800 text-right w-full sm:w-auto"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "block text-[10px] text-slate-400 font-bold uppercase"
+  }, "Ingreso Inicial Cobrado"), /*#__PURE__*/React.createElement("span", {
+    className: "text-lg font-black text-emerald-400"
+  }, "$", activeSprint.monto_total.toLocaleString('es-AR')))), currentView === 'menu' && /*#__PURE__*/React.createElement("div", {
+    className: "py-6 space-y-8"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "text-center max-w-xl mx-auto space-y-2"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "px-3 py-1 bg-cyan-500/10 text-cyan-400 text-xs font-bold rounded-full uppercase border border-cyan-500/20"
+  }, "Panel de Gesti\xF3n"), /*#__PURE__*/React.createElement("h2", {
+    className: "text-2xl sm:text-3xl font-extrabold text-white"
+  }, "Seleccion\xE1 un M\xF3dulo para Explorar"), /*#__PURE__*/React.createElement("p", {
+    className: "text-xs sm:text-sm text-slate-400"
+  }, "Todos los movimientos cargados en cualquiera de los m\xF3dulos impactar\xE1n en tiempo real sobre el Sprint activo.")), /*#__PURE__*/React.createElement("div", {
+    className: "grid grid-cols-1 sm:grid-cols-3 gap-6"
+  }, /*#__PURE__*/React.createElement("button", {
+    onClick: function onClick() {
+      return setCurrentView('finanzas');
+    },
+    className: "bg-slate-900/80 hover:bg-slate-800 border border-slate-800 hover:border-emerald-500/50 p-6 sm:p-8 rounded-3xl text-left transition-all duration-300 group shadow-xl hover:-translate-y-1 cursor-pointer flex flex-col justify-between"
+  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    className: "w-14 h-14 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 mb-6 group-hover:scale-110 transition-transform"
+  }, /*#__PURE__*/React.createElement(Icon, {
+    name: "dollar-sign",
+    className: "w-7 h-7"
+  })), /*#__PURE__*/React.createElement("h3", {
+    className: "text-xl font-extrabold text-white mb-2 group-hover:text-emerald-400 transition-colors"
+  }, "Carga Finanzas"), /*#__PURE__*/React.createElement("p", {
+    className: "text-xs text-slate-400 leading-relaxed mb-6"
+  }, "Registr\xE1 cobros adicionales, egresos de combustible, lavados o gastos imprevistos vinculados al alquiler.")), /*#__PURE__*/React.createElement("div", {
+    className: "flex items-center gap-2 text-xs font-bold text-emerald-400 group-hover:translate-x-1 transition-transform"
+  }, /*#__PURE__*/React.createElement("span", null, "Ingresar a Finanzas"), /*#__PURE__*/React.createElement(Icon, {
+    name: "arrow-right",
+    className: "w-4 h-4"
+  }))), /*#__PURE__*/React.createElement("button", {
+    onClick: function onClick() {
+      return setCurrentView('flota');
+    },
+    className: "bg-slate-900/80 hover:bg-slate-800 border border-slate-800 hover:border-cyan-500/50 p-6 sm:p-8 rounded-3xl text-left transition-all duration-300 group shadow-xl hover:-translate-y-1 cursor-pointer flex flex-col justify-between"
+  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    className: "w-14 h-14 rounded-2xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 mb-6 group-hover:scale-110 transition-transform"
+  }, /*#__PURE__*/React.createElement(Icon, {
+    name: "wrench",
+    className: "w-7 h-7"
+  })), /*#__PURE__*/React.createElement("h3", {
+    className: "text-xl font-extrabold text-white mb-2 group-hover:text-cyan-400 transition-colors"
+  }, "Control de Flota"), /*#__PURE__*/React.createElement("p", {
+    className: "text-xs text-slate-400 leading-relaxed mb-6"
+  }, "Supervis\xE1 kilometrajes actuales, cambi\xE1 el estado operativo de los veh\xEDculos y asent\xE1 services de taller.")), /*#__PURE__*/React.createElement("div", {
+    className: "flex items-center gap-2 text-xs font-bold text-cyan-400 group-hover:translate-x-1 transition-transform"
+  }, /*#__PURE__*/React.createElement("span", null, "Ingresar a Flota"), /*#__PURE__*/React.createElement(Icon, {
+    name: "arrow-right",
+    className: "w-4 h-4"
+  }))), /*#__PURE__*/React.createElement("button", {
+    onClick: function onClick() {
+      return setCurrentView('admin');
+    },
+    className: "bg-slate-900/80 hover:bg-slate-800 border border-slate-800 hover:border-violet-500/50 p-6 sm:p-8 rounded-3xl text-left transition-all duration-300 group shadow-xl hover:-translate-y-1 cursor-pointer flex flex-col justify-between"
+  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    className: "w-14 h-14 rounded-2xl bg-violet-500/10 border border-violet-500/30 flex items-center justify-center text-violet-400 mb-6 group-hover:scale-110 transition-transform"
+  }, /*#__PURE__*/React.createElement(Icon, {
+    name: "bar-chart-3",
+    className: "w-7 h-7"
+  })), /*#__PURE__*/React.createElement("h3", {
+    className: "text-xl font-extrabold text-white mb-2 group-hover:text-violet-400 transition-colors"
+  }, "Panel Admin"), /*#__PURE__*/React.createElement("p", {
+    className: "text-xs text-slate-400 leading-relaxed mb-6"
+  }, "Acceso libre e inmediato a gr\xE1ficos de balance, filtros por Sprints, kilometrajes e historial de flota.")), /*#__PURE__*/React.createElement("div", {
+    className: "flex items-center gap-2 text-xs font-bold text-violet-400 group-hover:translate-x-1 transition-transform"
+  }, /*#__PURE__*/React.createElement("span", null, "Ingresar a Panel Admin"), /*#__PURE__*/React.createElement(Icon, {
+    name: "arrow-right",
+    className: "w-4 h-4"
+  }))))), currentView === 'finanzas' && /*#__PURE__*/React.createElement(ViewFinanzas, {
+    transactions: transactions,
+    activeSprint: activeSprint,
+    onAddTransaction: handleAddTransaction,
+    onBack: function onBack() {
+      return setCurrentView('menu');
+    }
+  }), currentView === 'flota' && /*#__PURE__*/React.createElement(ViewFlota, {
+    vehicles: vehicles,
+    maintenanceRecords: maintenanceRecords,
+    statusHistory: statusHistory,
+    onUpdateStatus: handleUpdateVehicleStatus,
+    onUpdateKm: handleUpdateVehicleKm,
+    onAddMaintenance: handleAddMaintenance,
+    onBack: function onBack() {
+      return setCurrentView('menu');
+    }
+  }), currentView === 'admin' && /*#__PURE__*/React.createElement(ViewAdmin, {
+    transactions: transactions,
+    vehicles: vehicles,
+    sprints: sprints,
+    activeSprint: activeSprint,
+    statusHistory: statusHistory,
+    onExportExcel: handleExportExcel,
+    onBack: function onBack() {
+      return setCurrentView('menu');
+    }
+  })), toastMessage && /*#__PURE__*/React.createElement("div", {
+    className: "fixed bottom-6 right-6 z-50 max-w-md w-full px-4"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "bg-slate-900 border border-slate-700 text-white text-xs font-bold p-4 rounded-2xl shadow-2xl flex items-center justify-between gap-3"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "flex items-center gap-2"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "text-base"
+  }, "\u26A1"), /*#__PURE__*/React.createElement("p", {
+    className: "leading-snug"
+  }, toastMessage)), /*#__PURE__*/React.createElement("button", {
+    onClick: function onClick() {
+      return setToastMessage('');
+    },
+    className: "text-slate-400 hover:text-white font-bold text-sm"
+  }, "\u2715"))));
+}
+
+// --- SUB-COMPONENTE: VISTA FINANZAS ---
+function ViewFinanzas(_ref2) {
+  var transactions = _ref2.transactions,
+    activeSprint = _ref2.activeSprint,
+    onAddTransaction = _ref2.onAddTransaction,
+    onBack = _ref2.onBack;
+  var _useState17 = useState({
+      tipo: 'ingreso',
+      categoria: 'Cobro Adicional',
+      descripcion: '',
+      monto: '',
+      fecha: getTodayStr(),
+      metodo_pago: 'Efectivo'
+    }),
+    _useState18 = _slicedToArray(_useState17, 2),
+    form = _useState18[0],
+    setForm = _useState18[1];
+  var totalIngresos = transactions.filter(function (t) {
+    return t.tipo === 'ingreso';
+  }).reduce(function (acc, t) {
+    return acc + Number(t.monto);
+  }, 0);
+  var totalEgresos = transactions.filter(function (t) {
+    return t.tipo === 'egreso';
+  }).reduce(function (acc, t) {
+    return acc + Number(t.monto);
+  }, 0);
+  var balanceNeto = totalIngresos - totalEgresos;
+  var handleSubmit = function handleSubmit(e) {
+    e.preventDefault();
+    if (!form.descripcion || !form.monto) return;
+    onAddTransaction(_objectSpread(_objectSpread({}, form), {}, {
+      monto: parseFloat(form.monto)
+    }));
+    setForm({
+      tipo: 'ingreso',
+      categoria: 'Cobro Adicional',
+      descripcion: '',
+      monto: '',
+      fecha: getTodayStr(),
+      metodo_pago: 'Efectivo'
+    });
+  };
+  return /*#__PURE__*/React.createElement("div", {
+    className: "space-y-6"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "flex items-center justify-between"
+  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h2", {
+    className: "text-2xl font-extrabold text-white"
+  }, "M\xF3dulo de Finanzas"), /*#__PURE__*/React.createElement("p", {
+    className: "text-xs text-slate-400"
+  }, "Registr\xE1 movimientos financieros en tiempo real sobre el Sprint activo.")), /*#__PURE__*/React.createElement("button", {
+    onClick: onBack,
+    className: "px-4 py-2 bg-slate-800 hover:bg-slate-700 text-xs font-bold rounded-xl text-slate-300"
+  }, "\u2190 Volver al Men\xFA")), /*#__PURE__*/React.createElement("div", {
+    className: "grid grid-cols-1 sm:grid-cols-3 gap-4"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "bg-slate-900 border border-slate-800 p-5 rounded-2xl"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "text-[10px] text-slate-400 font-bold uppercase tracking-wider block mb-1"
+  }, "Total Ingresos"), /*#__PURE__*/React.createElement("span", {
+    className: "text-2xl font-black text-emerald-400"
+  }, "$", totalIngresos.toLocaleString('es-AR'))), /*#__PURE__*/React.createElement("div", {
+    className: "bg-slate-900 border border-slate-800 p-5 rounded-2xl"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "text-[10px] text-slate-400 font-bold uppercase tracking-wider block mb-1"
+  }, "Total Egresos"), /*#__PURE__*/React.createElement("span", {
+    className: "text-2xl font-black text-rose-400"
+  }, "$", totalEgresos.toLocaleString('es-AR'))), /*#__PURE__*/React.createElement("div", {
+    className: "bg-slate-900 border border-slate-800 p-5 rounded-2xl"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "text-[10px] text-slate-400 font-bold uppercase tracking-wider block mb-1"
+  }, "Balance Neto"), /*#__PURE__*/React.createElement("span", {
+    className: balanceNeto >= 0 ? 'text-2xl font-black text-cyan-400' : 'text-2xl font-black text-rose-400'
+  }, "$", balanceNeto.toLocaleString('es-AR')))), /*#__PURE__*/React.createElement("div", {
+    className: "grid grid-cols-1 lg:grid-cols-3 gap-6"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "bg-slate-900 border border-slate-800 p-6 rounded-3xl h-fit"
+  }, /*#__PURE__*/React.createElement("h3", {
+    className: "text-base font-bold text-white mb-4 flex items-center gap-2"
+  }, /*#__PURE__*/React.createElement(Icon, {
+    name: "plus-circle",
+    className: "w-5 h-5 text-cyan-400"
+  }), /*#__PURE__*/React.createElement("span", null, "Cargar Movimiento")), /*#__PURE__*/React.createElement("form", {
+    onSubmit: handleSubmit,
+    className: "space-y-4 text-xs"
+  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", {
+    className: "block text-slate-400 font-bold mb-1"
+  }, "Tipo de Movimiento"), /*#__PURE__*/React.createElement("div", {
+    className: "grid grid-cols-2 gap-2"
+  }, /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    onClick: function onClick() {
+      return setForm(_objectSpread(_objectSpread({}, form), {}, {
+        tipo: 'ingreso',
+        categoria: 'Cobro Adicional'
+      }));
+    },
+    className: form.tipo === 'ingreso' ? 'py-2 font-bold rounded-xl border transition-all bg-emerald-500/20 border-emerald-500 text-emerald-400' : 'py-2 font-bold rounded-xl border transition-all bg-slate-950 border-slate-800 text-slate-400'
+  }, "\uD83D\uDFE2 Ingreso"), /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    onClick: function onClick() {
+      return setForm(_objectSpread(_objectSpread({}, form), {}, {
+        tipo: 'egreso',
+        categoria: 'Combustible'
+      }));
+    },
+    className: form.tipo === 'egreso' ? 'py-2 font-bold rounded-xl border transition-all bg-rose-500/20 border-rose-500 text-rose-400' : 'py-2 font-bold rounded-xl border transition-all bg-slate-950 border-slate-800 text-slate-400'
+  }, "\uD83D\uDD34 Egreso"))), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", {
+    className: "block text-slate-400 font-bold mb-1"
+  }, "Categor\xEDa"), /*#__PURE__*/React.createElement("select", {
+    value: form.categoria,
+    onChange: function onChange(e) {
+      return setForm(_objectSpread(_objectSpread({}, form), {}, {
+        categoria: e.target.value
+      }));
+    },
+    className: "w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-white focus:outline-none focus:border-cyan-500"
+  }, form.tipo === 'ingreso' ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("option", {
+    value: "Alquiler Vehicular"
+  }, "Alquiler Vehicular"), /*#__PURE__*/React.createElement("option", {
+    value: "Cobro Adicional"
+  }, "Cobro Adicional / Exceso KM"), /*#__PURE__*/React.createElement("option", {
+    value: "Seguro / Dep\xF3sito"
+  }, "Seguro / Dep\xF3sito")) : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("option", {
+    value: "Combustible"
+  }, "Combustible"), /*#__PURE__*/React.createElement("option", {
+    value: "Lavado"
+  }, "Lavado / Est\xE9tica"), /*#__PURE__*/React.createElement("option", {
+    value: "Mantenimiento / Taller"
+  }, "Mantenimiento / Taller"), /*#__PURE__*/React.createElement("option", {
+    value: "Peaje"
+  }, "Peajes / Varios")))), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", {
+    className: "block text-slate-400 font-bold mb-1"
+  }, "Descripci\xF3n"), /*#__PURE__*/React.createElement("input", {
+    type: "text",
+    required: true,
+    placeholder: "ej. Carga nafta YPF",
+    value: form.descripcion,
+    onChange: function onChange(e) {
+      return setForm(_objectSpread(_objectSpread({}, form), {}, {
+        descripcion: e.target.value
+      }));
+    },
+    className: "w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-white placeholder-slate-600 focus:outline-none focus:border-cyan-500"
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "grid grid-cols-2 gap-2"
+  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", {
+    className: "block text-slate-400 font-bold mb-1"
+  }, "Monto ($)"), /*#__PURE__*/React.createElement("input", {
+    type: "number",
+    required: true,
+    min: "1",
+    placeholder: "15000",
+    value: form.monto,
+    onChange: function onChange(e) {
+      return setForm(_objectSpread(_objectSpread({}, form), {}, {
+        monto: e.target.value
+      }));
+    },
+    className: "w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-white placeholder-slate-600 focus:outline-none focus:border-cyan-500"
+  })), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", {
+    className: "block text-slate-400 font-bold mb-1"
+  }, "M\xE9todo"), /*#__PURE__*/React.createElement("select", {
+    value: form.metodo_pago,
+    onChange: function onChange(e) {
+      return setForm(_objectSpread(_objectSpread({}, form), {}, {
+        metodo_pago: e.target.value
+      }));
+    },
+    className: "w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-white focus:outline-none focus:border-cyan-500"
+  }, /*#__PURE__*/React.createElement("option", {
+    value: "Efectivo"
+  }, "Efectivo"), /*#__PURE__*/React.createElement("option", {
+    value: "Transferencia"
+  }, "Transferencia"), /*#__PURE__*/React.createElement("option", {
+    value: "Tarjeta"
+  }, "Tarjeta")))), /*#__PURE__*/React.createElement("button", {
+    type: "submit",
+    className: "w-full py-3 bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-black text-xs rounded-xl transition-all cursor-pointer mt-2"
+  }, "Registrar Movimiento"))), /*#__PURE__*/React.createElement("div", {
+    className: "lg:col-span-2 bg-slate-900 border border-slate-800 p-6 rounded-3xl"
+  }, /*#__PURE__*/React.createElement("h3", {
+    className: "text-base font-bold text-white mb-4"
+  }, "Historial de Transacciones del Sprint"), transactions.length === 0 ? /*#__PURE__*/React.createElement("div", {
+    className: "py-12 text-center text-slate-500 text-xs"
+  }, "No hay transacciones registradas a\xFAn.") : /*#__PURE__*/React.createElement("div", {
+    className: "space-y-3"
+  }, transactions.map(function (t) {
+    return /*#__PURE__*/React.createElement("div", {
+      key: t.id,
+      className: "bg-slate-950/70 border border-slate-800/80 p-4 rounded-2xl flex items-center justify-between gap-4"
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "flex items-center gap-3"
+    }, /*#__PURE__*/React.createElement("div", {
+      className: t.tipo === 'ingreso' ? 'w-10 h-10 rounded-xl flex items-center justify-center font-black text-lg bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' : 'w-10 h-10 rounded-xl flex items-center justify-center font-black text-lg bg-rose-500/10 text-rose-400 border border-rose-500/20'
+    }, t.tipo === 'ingreso' ? '+$' : '-$'), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h4", {
+      className: "text-xs font-bold text-white"
+    }, t.descripcion), /*#__PURE__*/React.createElement("div", {
+      className: "flex items-center gap-2 text-[10px] text-slate-400 mt-0.5"
+    }, /*#__PURE__*/React.createElement("span", {
+      className: "px-2 py-0.5 bg-slate-800 rounded-md font-semibold"
+    }, t.categoria), /*#__PURE__*/React.createElement("span", null, "\u2022 ", t.fecha), /*#__PURE__*/React.createElement("span", null, "\u2022 ", t.metodo_pago)))), /*#__PURE__*/React.createElement("span", {
+      className: t.tipo === 'ingreso' ? 'text-base font-black text-emerald-400' : 'text-base font-black text-rose-400'
+    }, (t.tipo === 'ingreso' ? '+' : '-') + '$' + Number(t.monto).toLocaleString('es-AR')));
+  })))));
+}
+
+// --- SUB-COMPONENTE: VISTA CONTROL DE FLOTA ---
+function ViewFlota(_ref3) {
+  var _vehicles$;
+  var vehicles = _ref3.vehicles,
+    maintenanceRecords = _ref3.maintenanceRecords,
+    statusHistory = _ref3.statusHistory,
+    onUpdateStatus = _ref3.onUpdateStatus,
+    onUpdateKm = _ref3.onUpdateKm,
+    onAddMaintenance = _ref3.onAddMaintenance,
+    onBack = _ref3.onBack;
+  var _useState19 = useState(((_vehicles$ = vehicles[0]) === null || _vehicles$ === void 0 ? void 0 : _vehicles$.id) || 1),
+    _useState20 = _slicedToArray(_useState19, 2),
+    selectedVehId = _useState20[0],
+    setSelectedVehId = _useState20[1];
+  var _useState21 = useState(''),
+    _useState22 = _slicedToArray(_useState21, 2),
+    kmInput = _useState22[0],
+    setKmInput = _useState22[1];
+  var _useState23 = useState({
+      descripcion: '',
+      costo: '',
+      fecha: getTodayStr()
+    }),
+    _useState24 = _slicedToArray(_useState23, 2),
+    maintForm = _useState24[0],
+    setMaintForm = _useState24[1];
+  var currentVeh = vehicles.find(function (v) {
+    return v.id === parseInt(selectedVehId);
+  }) || vehicles[0];
+  var handleKmSubmit = function handleKmSubmit(e) {
+    e.preventDefault();
+    if (!kmInput) return;
+    onUpdateKm(currentVeh.id, kmInput);
+    setKmInput('');
+  };
+  var handleMaintSubmit = function handleMaintSubmit(e) {
+    e.preventDefault();
+    if (!maintForm.descripcion || !maintForm.costo) return;
+    onAddMaintenance({
+      vehiculo_id: currentVeh.id,
+      vehiculo_modelo: currentVeh.marca_modelo,
+      descripcion: maintForm.descripcion,
+      costo: parseFloat(maintForm.costo),
+      fecha: maintForm.fecha
+    });
+    setMaintForm({
+      descripcion: '',
+      costo: '',
+      fecha: getTodayStr()
+    });
+  };
+  return /*#__PURE__*/React.createElement("div", {
+    className: "space-y-6"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "flex items-center justify-between"
+  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h2", {
+    className: "text-2xl font-extrabold text-white"
+  }, "Control de Flota Vehicular"), /*#__PURE__*/React.createElement("p", {
+    className: "text-xs text-slate-400"
+  }, "Administr\xE1 estados, kilometrajes e historial de mantenimientos.")), /*#__PURE__*/React.createElement("button", {
+    onClick: onBack,
+    className: "px-4 py-2 bg-slate-800 hover:bg-slate-700 text-xs font-bold rounded-xl text-slate-300"
+  }, "\u2190 Volver al Men\xFA")), /*#__PURE__*/React.createElement("div", {
+    className: "grid grid-cols-1 sm:grid-cols-3 gap-4"
+  }, vehicles.map(function (v) {
+    return /*#__PURE__*/React.createElement("div", {
+      key: v.id,
+      onClick: function onClick() {
+        return setSelectedVehId(v.id);
+      },
+      className: v.id === currentVeh.id ? 'p-5 rounded-2xl border transition-all cursor-pointer bg-slate-900 border-cyan-500/60 shadow-lg shadow-cyan-500/10' : 'p-5 rounded-2xl border transition-all cursor-pointer bg-slate-900/60 border-slate-800 hover:border-slate-700'
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "flex items-center justify-between mb-3"
+    }, /*#__PURE__*/React.createElement("span", {
+      className: "text-xs font-black text-cyan-400 bg-cyan-950/80 px-2.5 py-1 rounded-lg border border-cyan-500/30"
+    }, v.patente), /*#__PURE__*/React.createElement("span", {
+      className: v.estado === 'Alquilado' ? 'text-[10px] font-bold px-2 py-0.5 rounded-full border bg-amber-500/10 text-amber-400 border-amber-500/30' : v.estado === 'En Taller' ? 'text-[10px] font-bold px-2 py-0.5 rounded-full border bg-rose-500/10 text-rose-400 border-rose-500/30' : 'text-[10px] font-bold px-2 py-0.5 rounded-full border bg-emerald-500/10 text-emerald-400 border-emerald-500/30'
+    }, "\u25CF ", v.estado)), /*#__PURE__*/React.createElement("h3", {
+      className: "text-lg font-bold text-white"
+    }, v.marca_modelo), /*#__PURE__*/React.createElement("p", {
+      className: "text-xs text-slate-400 mt-1"
+    }, "KM: ", /*#__PURE__*/React.createElement("strong", {
+      className: "text-slate-200"
+    }, v.km_actual.toLocaleString('es-AR'), " km")), /*#__PURE__*/React.createElement("p", {
+      className: "text-[10px] text-slate-500 mt-0.5"
+    }, "Aceite: ", v.tipo_aceite));
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "grid grid-cols-1 lg:grid-cols-2 gap-6"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "bg-slate-900 border border-slate-800 p-6 rounded-3xl space-y-6"
+  }, /*#__PURE__*/React.createElement("h3", {
+    className: "text-base font-bold text-white"
+  }, "Configuraci\xF3n: ", currentVeh.marca_modelo, " (", currentVeh.patente, ")"), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", {
+    className: "block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2"
+  }, "Cambiar Estado de Operaci\xF3n"), /*#__PURE__*/React.createElement("div", {
+    className: "grid grid-cols-3 gap-2 text-xs"
+  }, ['Operativo', 'Alquilado', 'En Taller'].map(function (st) {
+    return /*#__PURE__*/React.createElement("button", {
+      key: st,
+      onClick: function onClick() {
+        return onUpdateStatus(currentVeh.id, st);
+      },
+      className: currentVeh.estado === st ? 'py-2.5 font-bold rounded-xl border transition-all bg-cyan-500/20 border-cyan-500 text-cyan-400' : 'py-2.5 font-bold rounded-xl border transition-all bg-slate-950 border-slate-800 text-slate-400 hover:text-white'
+    }, st);
+  }))), /*#__PURE__*/React.createElement("form", {
+    onSubmit: handleKmSubmit,
+    className: "space-y-3"
+  }, /*#__PURE__*/React.createElement("label", {
+    className: "block text-xs font-bold text-slate-400 uppercase tracking-wider"
+  }, "Actualizar Kilometraje"), /*#__PURE__*/React.createElement("div", {
+    className: "flex gap-2"
+  }, /*#__PURE__*/React.createElement("input", {
+    type: "number",
+    required: true,
+    placeholder: 'Actual: ' + currentVeh.km_actual,
+    value: kmInput,
+    onChange: function onChange(e) {
+      return setKmInput(e.target.value);
+    },
+    className: "flex-1 px-4 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-white text-xs placeholder-slate-600 focus:outline-none focus:border-cyan-500"
+  }), /*#__PURE__*/React.createElement("button", {
+    type: "submit",
+    className: "px-4 py-2.5 bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-xs rounded-xl cursor-pointer"
+  }, "Guardar KM"))), /*#__PURE__*/React.createElement("form", {
+    onSubmit: handleMaintSubmit,
+    className: "space-y-3 pt-4 border-t border-slate-800"
+  }, /*#__PURE__*/React.createElement("label", {
+    className: "block text-xs font-bold text-slate-400 uppercase tracking-wider"
+  }, "Registrar Service / Reparaci\xF3n de Taller"), /*#__PURE__*/React.createElement("input", {
+    type: "text",
+    required: true,
+    placeholder: "ej. Cambio de aceite y filtros 5W-30",
+    value: maintForm.descripcion,
+    onChange: function onChange(e) {
+      return setMaintForm(_objectSpread(_objectSpread({}, maintForm), {}, {
+        descripcion: e.target.value
+      }));
+    },
+    className: "w-full px-4 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-white text-xs placeholder-slate-600 focus:outline-none focus:border-cyan-500"
+  }), /*#__PURE__*/React.createElement("div", {
+    className: "flex gap-2"
+  }, /*#__PURE__*/React.createElement("input", {
+    type: "number",
+    required: true,
+    placeholder: "Costo ($)",
+    value: maintForm.costo,
+    onChange: function onChange(e) {
+      return setMaintForm(_objectSpread(_objectSpread({}, maintForm), {}, {
+        costo: e.target.value
+      }));
+    },
+    className: "flex-1 px-4 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-white text-xs placeholder-slate-600 focus:outline-none focus:border-cyan-500"
+  }), /*#__PURE__*/React.createElement("button", {
+    type: "submit",
+    className: "px-4 py-2.5 bg-rose-500 hover:bg-rose-400 text-white font-bold text-xs rounded-xl cursor-pointer"
+  }, "Asentar Service")))), /*#__PURE__*/React.createElement("div", {
+    className: "bg-slate-900 border border-slate-800 p-6 rounded-3xl"
+  }, /*#__PURE__*/React.createElement("h3", {
+    className: "text-base font-bold text-white mb-4"
+  }, "Historial de Mantenimientos"), maintenanceRecords.length === 0 ? /*#__PURE__*/React.createElement("div", {
+    className: "py-12 text-center text-slate-500 text-xs"
+  }, "No hay registros de service o taller asentados.") : /*#__PURE__*/React.createElement("div", {
+    className: "space-y-3"
+  }, maintenanceRecords.map(function (m) {
+    return /*#__PURE__*/React.createElement("div", {
+      key: m.id,
+      className: "bg-slate-950 border border-slate-800 p-4 rounded-2xl flex items-center justify-between"
+    }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h4", {
+      className: "text-xs font-bold text-white"
+    }, m.vehiculo_modelo), /*#__PURE__*/React.createElement("p", {
+      className: "text-xs text-slate-400 mt-0.5"
+    }, m.descripcion), /*#__PURE__*/React.createElement("span", {
+      className: "text-[10px] text-slate-500"
+    }, m.fecha)), /*#__PURE__*/React.createElement("span", {
+      className: "text-sm font-black text-rose-400"
+    }, "-$", Number(m.costo).toLocaleString('es-AR')));
+  })))));
+}
+
+// --- SUB-COMPONENTE: VISTA PANEL ADMIN AVANZADO ---
+function ViewAdmin(_ref4) {
+  var transactions = _ref4.transactions,
+    vehicles = _ref4.vehicles,
+    sprints = _ref4.sprints,
+    activeSprint = _ref4.activeSprint,
+    statusHistory = _ref4.statusHistory,
+    onExportExcel = _ref4.onExportExcel,
+    onBack = _ref4.onBack;
+  var _useState25 = useState('todos'),
+    _useState26 = _slicedToArray(_useState25, 2),
+    selectedSprintId = _useState26[0],
+    setSelectedSprintId = _useState26[1];
+  var _useState27 = useState('todos'),
+    _useState28 = _slicedToArray(_useState27, 2),
+    selectedMetodo = _useState28[0],
+    setSelectedMetodo = _useState28[1];
+
+  // FILTRADO DINÁMICO DE TRANSACCIONES
+  var filteredTransactions = transactions.filter(function (t) {
+    if (selectedSprintId !== 'todos' && t.sprint_id !== selectedSprintId) return false;
+    if (selectedMetodo !== 'todos' && t.metodo_pago !== selectedMetodo) return false;
+    return true;
+  });
+  var totalIngresos = filteredTransactions.filter(function (t) {
+    return t.tipo === 'ingreso';
+  }).reduce(function (acc, t) {
+    return acc + Number(t.monto);
+  }, 0);
+  var totalEgresos = filteredTransactions.filter(function (t) {
+    return t.tipo === 'egreso';
+  }).reduce(function (acc, t) {
+    return acc + Number(t.monto);
+  }, 0);
+  var balanceNeto = totalIngresos - totalEgresos;
+  var chartData = [{
+    name: 'Ingresos',
+    monto: totalIngresos
+  }, {
+    name: 'Egresos',
+    monto: totalEgresos
+  }, {
+    name: 'Balance Neto',
+    monto: Math.max(0, balanceNeto)
+  }];
+
+  // DATOS PARA GRÁFICO DE KILOMETROS
+  var kmChartData = vehicles.map(function (v) {
+    return {
+      modelo: v.marca_modelo,
+      kilometros: v.km_actual,
+      patente: v.patente
+    };
+  });
+  return /*#__PURE__*/React.createElement("div", {
+    className: "space-y-6"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "flex flex-col sm:flex-row sm:items-center justify-between gap-4"
+  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    className: "flex items-center gap-2"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "px-2.5 py-0.5 bg-violet-500/10 text-violet-400 border border-violet-500/30 font-bold text-[10px] uppercase rounded-full"
+  }, "Acceso Directo Sin Clave"), /*#__PURE__*/React.createElement("h2", {
+    className: "text-2xl font-extrabold text-white"
+  }, "Panel de Control General")), /*#__PURE__*/React.createElement("p", {
+    className: "text-xs text-slate-400 mt-1"
+  }, "M\xE9tricas globales, filtrado por Sprints y bit\xE1cora de flota.")), /*#__PURE__*/React.createElement("div", {
+    className: "flex items-center gap-3"
+  }, /*#__PURE__*/React.createElement("button", {
+    onClick: onExportExcel,
+    className: "px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs rounded-xl shadow-lg shadow-emerald-600/20 transition-all flex items-center gap-2 cursor-pointer"
+  }, /*#__PURE__*/React.createElement(Icon, {
+    name: "download",
+    className: "w-4 h-4"
+  }), /*#__PURE__*/React.createElement("span", null, "Exportar Excel")), /*#__PURE__*/React.createElement("button", {
+    onClick: onBack,
+    className: "px-4 py-2 bg-slate-800 hover:bg-slate-700 text-xs font-bold rounded-xl text-slate-300"
+  }, "\u2190 Volver al Men\xFA"))), /*#__PURE__*/React.createElement("div", {
+    className: "bg-slate-900 border border-slate-800 p-4 sm:p-5 rounded-2xl grid grid-cols-1 sm:grid-cols-2 gap-4"
+  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", {
+    className: "block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5"
+  }, "Filtrar por Sprint de Alquiler"), /*#__PURE__*/React.createElement("select", {
+    value: selectedSprintId,
+    onChange: function onChange(e) {
+      return setSelectedSprintId(e.target.value);
+    },
+    className: "w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-white text-xs focus:outline-none focus:border-violet-500 cursor-pointer"
+  }, /*#__PURE__*/React.createElement("option", {
+    value: "todos"
+  }, "\uD83C\uDF10 Todos los Sprints (Agregado Global)"), sprints.map(function (s) {
+    return /*#__PURE__*/React.createElement("option", {
+      key: s.id,
+      value: s.id
+    }, "\uD83C\uDFC6 ", s.nombre, " (", s.fecha_inicio, " al ", s.fecha_fin_estimada, ")");
+  }))), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", {
+    className: "block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5"
+  }, "Filtrar por M\xE9todo de Pago"), /*#__PURE__*/React.createElement("select", {
+    value: selectedMetodo,
+    onChange: function onChange(e) {
+      return setSelectedMetodo(e.target.value);
+    },
+    className: "w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-white text-xs focus:outline-none focus:border-violet-500 cursor-pointer"
+  }, /*#__PURE__*/React.createElement("option", {
+    value: "todos"
+  }, "\uD83D\uDCB3 Todos los M\xE9todos de Pago"), /*#__PURE__*/React.createElement("option", {
+    value: "Efectivo"
+  }, "\uD83D\uDCB5 Efectivo"), /*#__PURE__*/React.createElement("option", {
+    value: "Transferencia"
+  }, "\uD83C\uDFE6 Transferencia Bancaria"), /*#__PURE__*/React.createElement("option", {
+    value: "Tarjeta"
+  }, "\uD83D\uDCB3 Tarjeta de Cr\xE9dito / D\xE9bito")))), /*#__PURE__*/React.createElement("div", {
+    className: "grid grid-cols-1 sm:grid-cols-4 gap-4"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "bg-slate-900 border border-slate-800 p-5 rounded-2xl"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "text-[10px] text-slate-400 font-bold uppercase tracking-wider block mb-1"
+  }, "Facturaci\xF3n Total"), /*#__PURE__*/React.createElement("span", {
+    className: "text-2xl font-black text-emerald-400"
+  }, "$", totalIngresos.toLocaleString('es-AR'))), /*#__PURE__*/React.createElement("div", {
+    className: "bg-slate-900 border border-slate-800 p-5 rounded-2xl"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "text-[10px] text-slate-400 font-bold uppercase tracking-wider block mb-1"
+  }, "Gastos Operativos"), /*#__PURE__*/React.createElement("span", {
+    className: "text-2xl font-black text-rose-400"
+  }, "$", totalEgresos.toLocaleString('es-AR'))), /*#__PURE__*/React.createElement("div", {
+    className: "bg-slate-900 border border-slate-800 p-5 rounded-2xl"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "text-[10px] text-slate-400 font-bold uppercase tracking-wider block mb-1"
+  }, "Utilidad Neta"), /*#__PURE__*/React.createElement("span", {
+    className: "text-2xl font-black text-cyan-400"
+  }, "$", balanceNeto.toLocaleString('es-AR'))), /*#__PURE__*/React.createElement("div", {
+    className: "bg-slate-900 border border-slate-800 p-5 rounded-2xl"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "text-[10px] text-slate-400 font-bold uppercase tracking-wider block mb-1"
+  }, "Movimientos Filtrados"), /*#__PURE__*/React.createElement("span", {
+    className: "text-2xl font-black text-violet-400"
+  }, filteredTransactions.length))), /*#__PURE__*/React.createElement("div", {
+    className: "grid grid-cols-1 lg:grid-cols-2 gap-6"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "bg-slate-900 border border-slate-800 p-6 rounded-3xl"
+  }, /*#__PURE__*/React.createElement("h3", {
+    className: "text-base font-bold text-white mb-6"
+  }, "Balance Financiero (Filtrado)"), /*#__PURE__*/React.createElement("div", {
+    className: "h-64 w-full"
+  }, /*#__PURE__*/React.createElement(ResponsiveContainer, {
+    width: "100%",
+    height: "100%"
+  }, /*#__PURE__*/React.createElement(BarChart, {
+    data: chartData
+  }, /*#__PURE__*/React.createElement(CartesianGrid, {
+    strokeDasharray: "3 3",
+    stroke: "#1e293b"
+  }), /*#__PURE__*/React.createElement(XAxis, {
+    dataKey: "name",
+    stroke: "#94a3b8",
+    fontSize: 12
+  }), /*#__PURE__*/React.createElement(YAxis, {
+    stroke: "#94a3b8",
+    fontSize: 12
+  }), /*#__PURE__*/React.createElement(Tooltip, {
+    contentStyle: {
+      backgroundColor: '#0f172a',
+      borderColor: '#334155',
+      borderRadius: '12px',
+      color: '#fff'
+    },
+    formatter: function formatter(val) {
+      return ['$' + Number(val).toLocaleString('es-AR'), 'Monto'];
+    }
+  }), /*#__PURE__*/React.createElement(Bar, {
+    dataKey: "monto",
+    fill: "#06b6d4",
+    radius: [8, 8, 0, 0]
+  }))))), /*#__PURE__*/React.createElement("div", {
+    className: "bg-slate-900 border border-slate-800 p-6 rounded-3xl"
+  }, /*#__PURE__*/React.createElement("h3", {
+    className: "text-base font-bold text-white mb-6"
+  }, "Kilometraje Acumulado por Veh\xEDculo"), /*#__PURE__*/React.createElement("div", {
+    className: "h-64 w-full"
+  }, /*#__PURE__*/React.createElement(ResponsiveContainer, {
+    width: "100%",
+    height: "100%"
+  }, /*#__PURE__*/React.createElement(BarChart, {
+    data: kmChartData
+  }, /*#__PURE__*/React.createElement(CartesianGrid, {
+    strokeDasharray: "3 3",
+    stroke: "#1e293b"
+  }), /*#__PURE__*/React.createElement(XAxis, {
+    dataKey: "modelo",
+    stroke: "#94a3b8",
+    fontSize: 12
+  }), /*#__PURE__*/React.createElement(YAxis, {
+    stroke: "#94a3b8",
+    fontSize: 12
+  }), /*#__PURE__*/React.createElement(Tooltip, {
+    contentStyle: {
+      backgroundColor: '#0f172a',
+      borderColor: '#334155',
+      borderRadius: '12px',
+      color: '#fff'
+    },
+    formatter: function formatter(val) {
+      return [Number(val).toLocaleString('es-AR') + ' km', 'Kilometraje'];
+    }
+  }), /*#__PURE__*/React.createElement(Bar, {
+    dataKey: "kilometros",
+    fill: "#8b5cf6",
+    radius: [8, 8, 0, 0]
+  })))))), /*#__PURE__*/React.createElement("div", {
+    className: "bg-slate-900 border border-slate-800 p-6 rounded-3xl"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "flex items-center justify-between mb-4"
+  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h3", {
+    className: "text-base font-bold text-white"
+  }, "Historial de Cambios de Estado y Kilometraje"), /*#__PURE__*/React.createElement("p", {
+    className: "text-xs text-slate-400"
+  }, "Bit\xE1cora de evoluci\xF3n de la flota antes y despu\xE9s de cada alquiler."))), /*#__PURE__*/React.createElement("div", {
+    className: "overflow-x-auto"
+  }, /*#__PURE__*/React.createElement("table", {
+    className: "w-full text-left text-xs"
+  }, /*#__PURE__*/React.createElement("thead", {
+    className: "text-slate-400 uppercase font-bold border-b border-slate-800 text-[10px]"
+  }, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", {
+    className: "py-3 px-4"
+  }, "Fecha"), /*#__PURE__*/React.createElement("th", {
+    className: "py-3 px-4"
+  }, "Veh\xEDculo"), /*#__PURE__*/React.createElement("th", {
+    className: "py-3 px-4"
+  }, "Patente"), /*#__PURE__*/React.createElement("th", {
+    className: "py-3 px-4"
+  }, "Evento"), /*#__PURE__*/React.createElement("th", {
+    className: "py-3 px-4"
+  }, "Transici\xF3n de Estado"), /*#__PURE__*/React.createElement("th", {
+    className: "py-3 px-4 text-right"
+  }, "Evoluci\xF3n KM"), /*#__PURE__*/React.createElement("th", {
+    className: "py-3 px-4 text-right"
+  }, "Diferencia"))), /*#__PURE__*/React.createElement("tbody", {
+    className: "divide-y divide-slate-800"
+  }, statusHistory.map(function (h) {
+    return /*#__PURE__*/React.createElement("tr", {
+      key: h.id,
+      className: "hover:bg-slate-800/50"
+    }, /*#__PURE__*/React.createElement("td", {
+      className: "py-3 px-4 text-slate-400 font-mono text-[11px]"
+    }, h.fecha), /*#__PURE__*/React.createElement("td", {
+      className: "py-3 px-4 font-bold text-white"
+    }, h.vehiculo_modelo), /*#__PURE__*/React.createElement("td", {
+      className: "py-3 px-4 text-cyan-400 font-bold"
+    }, h.patente), /*#__PURE__*/React.createElement("td", {
+      className: "py-3 px-4 text-slate-300 font-medium"
+    }, h.evento), /*#__PURE__*/React.createElement("td", {
+      className: "py-3 px-4"
+    }, /*#__PURE__*/React.createElement("span", {
+      className: "text-[10px] font-bold px-2 py-0.5 bg-slate-950 border border-slate-800 rounded-md text-slate-300"
+    }, h.estado_previo, " \u2794 ", h.nuevo_estado)), /*#__PURE__*/React.createElement("td", {
+      className: "py-3 px-4 text-right text-slate-300"
+    }, h.km_anterior.toLocaleString('es-AR'), " km \u2794 ", /*#__PURE__*/React.createElement("strong", {
+      className: "text-white"
+    }, h.km_nuevo.toLocaleString('es-AR'), " km")), /*#__PURE__*/React.createElement("td", {
+      className: "py-3 px-4 text-right"
+    }, /*#__PURE__*/React.createElement("span", {
+      className: "font-bold px-2 py-0.5 rounded-md text-[10px] ".concat(h.diff_km > 0 ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/30' : 'bg-slate-800 text-slate-400')
+    }, h.diff_km > 0 ? "+".concat(h.diff_km.toLocaleString('es-AR'), " km") : '0 km')));
+  }))))));
+}
+var root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(/*#__PURE__*/React.createElement(SandboxApp, null));
+    </script>
+</body>
+</html>

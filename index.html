@@ -11,8 +11,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
-    <!-- Tailwind CSS v4 Play CDN -->
-    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
     
     <!-- Configuración Global -->
     <script src="./config.js"></script>
@@ -324,10 +324,13 @@
                         </div>
 
                         <!-- CTA del producto específico -->
-                        <div class="pt-2">
-                            <a href="#contacto" id="btn-cta-rent" class="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold text-brand-cyan hover:text-white transition-colors group/link whitespace-nowrap">
+                        <div class="pt-2 flex flex-wrap items-center gap-3">
+                            <a href="demos.html?tab=rental" id="btn-cta-rent-sandbox" class="px-5 py-3 bg-gradient-to-r from-brand-cyan to-brand-violet hover:from-brand-cyan/95 hover:to-brand-violet/95 text-white font-bold text-xs sm:text-sm rounded-xl transition-all shadow-lg shadow-brand-cyan/20 hover:scale-102 flex items-center gap-2 cursor-pointer">
+                                🚗 Probar Demo Rent a Car
+                                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+                            </a>
+                            <a href="#contacto" id="btn-cta-rent" class="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold text-brand-cyan hover:text-white transition-colors group/link whitespace-nowrap px-3 py-2">
                                 Solicitar Demo del Sistema
-                                <svg class="w-4 h-4 transform group-hover/link:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
                             </a>
                         </div>
                     </div>
